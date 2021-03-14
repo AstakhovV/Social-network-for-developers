@@ -2,7 +2,8 @@ import React from 'react';
 import s from './Profile.module.css'
 import MyPosts from "./Posts/MyPosts";
 
-const Profile = () => {
+const Profile = (props) => {
+
     return (
         <div>
             <div>
@@ -10,16 +11,16 @@ const Profile = () => {
                      width={1000}/>
             </div>
             <div>
-                Avatar+description
+                ProfileInfo
             </div>
             <div className={s.item}>
-                <a>My profile </a>
+                My profile
             </div>
             <div>
                 My pets
             </div>
             <div>
-                <MyPosts/>
+                <MyPosts posts={props.state.posts}/>
             </div>
         </div>
     )
