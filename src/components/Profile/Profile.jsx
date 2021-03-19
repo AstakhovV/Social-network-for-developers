@@ -8,7 +8,7 @@ const Profile = (props) => {
         <div>
             <div>
                 <img src='https://pcvector.net/uploads/posts/2018-08/1533326959_low-poly-background-generator-min.png'
-                     width={1000}/>
+                     width={500}/>
             </div>
             <div>
                 ProfileInfo
@@ -20,10 +20,15 @@ const Profile = (props) => {
                 My pets
             </div>
             <div>
-                <MyPosts posts={props.state.posts}/>
+                <MyPosts posts={props.state.posts}
+                         addPost={props.addPost}
+                         newPostText={props.state.newPostText}
+                         updateNewPostText={props.updateNewPostText}
+                />
             </div>
         </div>
     )
+    debugger;
 }
 
 export default Profile;
