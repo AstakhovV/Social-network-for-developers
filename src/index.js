@@ -1,7 +1,16 @@
 import React from 'react';
 import './index.css';
-import state from "./redux/state";
-import {rerenderEntireTree} from "./render"
+import store from "./redux/state";
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
 
-// функция обновления дерева
-rerenderEntireTree (state);
+let rerenderEntireTree = () => {
+    ReactDOM.render(<App state={store.getState()}
+                         dispatch={store.dispatch.bind(store)}/>,
+        document.getElementById('root'));
+}
+
+rerenderEntireTree (store.getState());// функция обновления дерева
+
+store.subscribe (rerenderEntireTree);
