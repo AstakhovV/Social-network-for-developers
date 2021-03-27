@@ -1,3 +1,12 @@
+import profileReducer from './profile-reducer';
+import dialogsReducer from './dialogs-reducer';
+import sidebarReducer from './sidebar-reducer';
+
+const ADD_POST = 'ADD-POST';
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY';
+const SEND_MESSAGE = 'SEND-MESSAGE';
+
 let store = {
     _state: {
         profilePage: {
@@ -11,12 +20,16 @@ let store = {
                 {id: 3, name: 'Alexander'},
                 {id: 4, name: 'Elena'},
                 {id: 5, name: 'Marina'},
-                {id: 6, name: 'Viktor'}],
+                {id: 6, name: 'Viktor'}
+            ],
             messages: [{id: 1, message: 'Hello!'},
                 {id: 2, message: 'Can you show me your pets certificate?!'},
                 {id: 3, message: 'Only your Collie'},
-                {id: 4, message: 'She is pretty good'},]
-        }
+                {id: 4, message: 'She is pretty good'}
+            ],
+            newMessageBody: ''
+        },
+        sidebar: {}
     },
     _callSubscriber() {
         console.log('State changed')
@@ -25,28 +38,32 @@ let store = {
         return this._state;
     },
     subscribe(observer) {
-       this._callSubscriber = observer; // 'наблюдатель' паттерн observer
+        this._callSubscriber = observer; // 'наблюдатель' паттерн observer
     },
-    dispatch (action) {
-        if (action.type === 'ADD-POST') {
-            let newPost = {
-                id: 5,
-                message: this._state.profilePage.newPostText,
-                likesCount: 0
-            };
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = '';  //обнуление текста в поле пост
-            this._callSubscriber(this._state);
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
-            this._state.profilePage.newPostText = action.newText;
-            this._callSubscriber(this._state);
-        }
+    // action - объект у которого есть typ
+    dispatch(action) {
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.dialogsPage = dialogsReducer(this._state.dialogsPage, action);
+        this._state.sidebar = sidebarReducer(this._state.sidebar, action);
+
+        this._callSubscriber(this._state); //уведомление подписчика (store)
     }
 }
+//Экш креатор для создания действия в UI
+    export const addPostActionCreator = () => ({type: ADD_POST});
+    export const updateNewPostTextActionCreator = (text) =>
+        ({type: UPDATE_NEW_POST_TEXT, newText: text});
+    export const sendMessageCreator = () => ({type: SEND_MESSAGE});
+    export const updateNewMessageBodyCreator = (body) => {
+        return {
+            type: UPDATE_NEW_MESSAGE_BODY, body: body
+        }
+    }
 
 
-window.store = store;
 
 
-export default store
+
+    window.store = store;
+    export default store
 

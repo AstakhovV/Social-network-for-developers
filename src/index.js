@@ -7,10 +7,12 @@ import App from './App';
 
 let rerenderEntireTree = () => {
     ReactDOM.render(<App state={store.getState()}
-                         dispatch={store.dispatch.bind(store)}/>,
+                         dispatch={store.dispatch.bind(store)}
+                         store={store}
+        />,
         document.getElementById('root'));
 }
 
-rerenderEntireTree (store.getState());// функция обновления дерева
+rerenderEntireTree(store.getState());// функция обновления дерева
 
-store.subscribe (rerenderEntireTree);
+store.subscribe(rerenderEntireTree);

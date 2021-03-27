@@ -21,8 +21,8 @@ const Profile = (props) => {
             </div>
             <div>
                 <MyPosts posts={props.state.posts}
-                         dispatch={props.dispatch}
                          newPostText={props.state.newPostText}
+                         dispatch={props.dispatch}
                 />
             </div>
         </div>
