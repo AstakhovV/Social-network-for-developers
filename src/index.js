@@ -4,18 +4,13 @@ import store from "./redux/redux-store";
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import {Provider} from "react-redux";
 
-let rerenderEntireTree = () => {
-    ReactDOM.render(<App state={store.getState()}
-                         dispatch={store.dispatch.bind(store)}
-                         store={store}
-        />,
-        document.getElementById('root'));
-}
+ReactDOM.render(
+    <Provider store={store}>
+        <App //state={store.getState()} dispatch={store.dispatch.bind(store)} store={store}
+        />
+    </Provider>, // провайдер для прокидывания пропсов в компоненты
+    document.getElementById('root')
+)
 
-rerenderEntireTree(store.getState());// функция обновления дерева
-
-store.subscribe(() => {              //перерисовка стора в редаксе
-    let state = store.getState();
-    rerenderEntireTree(state)
-});
