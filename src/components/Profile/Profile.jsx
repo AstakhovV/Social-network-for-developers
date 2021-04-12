@@ -17,14 +17,10 @@ const Profile = (props) => {
                 My profile
             </div>
             <div>
-                My pets
-            </div>
-            <div>
                 <MyPostsContainer store={props.store}/>
             </div>
         </div>
     )
-    debugger;
 }
 
 export default Profile;

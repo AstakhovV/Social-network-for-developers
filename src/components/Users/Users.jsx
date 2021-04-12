@@ -1,6 +1,7 @@
 import React from "react";
 import style from './users.module.css';
 import userPhoto from '/REACT/Animal breeder/src/assets/image/user.jpeg'
+import {NavLink} from "react-router-dom";
 
 let Users = (props) => { //this нет в функц.компонентах
 
@@ -24,7 +25,9 @@ let Users = (props) => { //this нет в функц.компонентах
             props.users.map(u => <div key={u.id}>
          <span>
              <div>
-                 <img src={u.photos.small != null ? u.photos.small : userPhoto} className={style.userPhoto}/>
+                 <NavLink to={'/profile' + u.id}>
+                  <img src={u.photos.small != null ? u.photos.small : userPhoto} className={style.userPhoto}/>
+                 </NavLink>
              </div>
              <div>
                  {u.followed
