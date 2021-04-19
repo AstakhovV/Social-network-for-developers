@@ -1,24 +1,17 @@
 import React from 'react';
-import s from './Profile.module.css'
 import MyPostsContainer from "./Posts/MyPostsContainer";
+import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import Preloader from "../Common/Preloader/Preloader";
 
 const Profile = (props) => {
+    if (!props.profile){
+        return <Preloader/>
+    }
 
     return (
         <div>
-            <div>
-                <img src='https://pcvector.net/uploads/posts/2018-08/1533326959_low-poly-background-generator-min.png'
-                     width={500}/>
-            </div>
-            <div>
-                ProfileInfo
-            </div>
-            <div className={s.item}>
-                My profile
-            </div>
-            <div>
-                <MyPostsContainer store={props.store}/>
-            </div>
+           <ProfileInfo profile={props.profile}/>
+           <MyPostsContainer store={props.store}/>
         </div>
     )
 }
