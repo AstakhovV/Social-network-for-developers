@@ -6,12 +6,11 @@ import {
     toogleIsFetching,
     setUsers,
     setUsersTotalCount,
-    unfollow, toogleFollowingProgress
+    unfollow, toogleFollowingProgress, getUsers
 } from "../../redux/users-reducer";
-import * as axios from "axios";
 import Users from "./Users";
 import Preloader from "../Common/Preloader/Preloader";
-import {userAPI} from "../../api/api";
+
 
 
 class UsersContainer extends React.Component { // классовая компонента юзерсАПИ
@@ -20,24 +19,12 @@ class UsersContainer extends React.Component { // классовая компо�
     } // конструктор можно не писать, если в нем больше ничего нет
     //  как в данном случае. pagination - постраничный вывод
 
-    componentDidMount(): void {// ajax-запрос на сервер с помощью библиотеки axios
-        this.props.toogleIsFetching(true)
-        userAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-                this.props.toogleIsFetching(false)
-                this.props.setUsers(data.items)
-                this.props.setUsersTotalCount(data.totalCount) //запрос количество пользователей с сервера
-            })
+    componentDidMount() {
+        this.props.getUsers(this.props.currentPage, this.props.pageSize);
     }
 
     onPageChanged = (pageNumber) => {
-        this.props.toogleIsFetching(true)
-        this.props.setCurrentPage(pageNumber);
-
-        userAPI.getUsers(pageNumber, this.props.pageSize)
-            .then(data => {
-                this.props.toogleIsFetching(false)
-                this.props.setUsers(data.items)
-            })
+        this.props.getUsers(pageNumber, this.props.pageSize)
     }
 
     render() {
@@ -93,7 +80,10 @@ let mapStateToProps = (state) => {
 // } e
 // dispatch оригинал, ниже укороченная версия
 
-export default connect(mapStateToProps, {
-        follow, unfollow, setUsers, setCurrentPage, setUsersTotalCount, toogleIsFetching, toogleFollowingProgress
+export default connect(mapStateToProps,
+    {
+        follow, unfollow, setUsers, setCurrentPage,
+        setUsersTotalCount, toogleIsFetching, toogleFollowingProgress,
+        getUsers
     }
 )(UsersContainer);
