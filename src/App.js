@@ -7,7 +7,6 @@ import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 
-
 const App = (props) => {
 
     return (
@@ -28,7 +27,6 @@ const App = (props) => {
         </BrowserRouter>
     );
 }
-
 
 export default App;
 
