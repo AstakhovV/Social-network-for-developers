@@ -1,14 +1,16 @@
 import React from 'react';
 import s from '../Profile.module.css'
+import ProfileStatus from './ProfileStatus'
+import Preloader from "../../Common/Preloader/Preloader";
+
 
 const ProfileInfo = (props) => {
+    if (!props.profile) {
+        return <Preloader/>
+    }
 
     return (
         <div>
-            <div>
-                <img src='https://pcvector.net/uploads/posts/2018-08/1533326959_low-poly-background-generator-min.png'
-                     width={500}/>
-            </div>
             <div>
                 ProfileInfo
             </div>
@@ -17,6 +19,7 @@ const ProfileInfo = (props) => {
                 <div>
                     Name:
                     {props.profile.fullName}
+                    <ProfileStatus status={'Hello my friends'}/>
                 </div>
             </div>
         </div>

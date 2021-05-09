@@ -10,6 +10,8 @@ import {
 } from "../../redux/users-reducer";
 import Users from "./Users";
 import Preloader from "../Common/Preloader/Preloader";
+import {compose} from "redux";
+import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 
 
@@ -80,10 +82,10 @@ let mapStateToProps = (state) => {
 // } e
 // dispatch оригинал, ниже укороченная версия
 
-export default connect(mapStateToProps,
+export default compose(WithAuthRedirect, connect(mapStateToProps,
     {
         follow, unfollow, setUsers, setCurrentPage,
         setUsersTotalCount, toogleIsFetching, toogleFollowingProgress,
         getUsers
     }
-)(UsersContainer);
+))(UsersContainer)

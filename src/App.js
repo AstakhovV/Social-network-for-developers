@@ -6,6 +6,7 @@ import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
+import LoginPage from "./components/Login/Login";
 
 const App = (props) => {
 
@@ -16,11 +17,13 @@ const App = (props) => {
                 <Navbar/>
                 <div className='app-wrapper-content'>
                     <Route path='/dialogs'
-                           render={() => <DialogsContainer store={props.store} />}/>
+                           render={() => <DialogsContainer store={props.store}/>}/>
                     <Route path='/profile/:userId?' // : - параметры
                            render={() => <ProfileContainer store={props.store}/>}/>
                     <Route path='/users'
                            render={() => <UsersContainer store={props.store}/>}/>
+                    <Route path='/login'
+                           render={() => <LoginPage store={props.store}/>}/>
                 </div>
 
             </div>
