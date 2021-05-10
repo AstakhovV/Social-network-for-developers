@@ -8,7 +8,6 @@ const ProfileInfo = (props) => {
     if (!props.profile) {
         return <Preloader/>
     }
-
     return (
         <div>
             <div>
@@ -19,7 +18,8 @@ const ProfileInfo = (props) => {
                 <div>
                     Name:
                     {props.profile.fullName}
-                    <ProfileStatus status={'Hello my friends'}/>
+                    <ProfileStatus status={props.status}
+                    updateStatus={props.updateStatus}/>
                 </div>
             </div>
         </div>

@@ -4,14 +4,16 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import Preloader from "../Common/Preloader/Preloader";
 
 const Profile = (props) => {
-    if (!props.profile){
+    if (!props.profile) {
         return <Preloader/>
     }
-
     return (
         <div>
-           <ProfileInfo profile={props.profile}/>
-           <MyPostsContainer store={props.store}/>
+            <ProfileInfo profile={props.profile}
+                         status={props.status}
+                         updateStatus={props.updateStatus}
+            />
+            <MyPostsContainer store={props.store}/>
         </div>
     )
 }
