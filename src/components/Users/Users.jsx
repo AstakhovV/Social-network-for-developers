@@ -1,6 +1,6 @@
 import React from "react";
 import style from './users.module.css';
-import userPhoto from '/REACT/Animal breeder/src/assets/image/user.jpeg'
+import userPhoto from '/REACT/Social-network-for-developers/src/assets/image/user.jpeg'
 import {NavLink} from "react-router-dom";
 
 let Users = (props) => { //this нет в функц.компонентах

@@ -29,6 +29,16 @@ class ProfileStatus extends React.Component {
 
     }
 
+    componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS) {
+        if (prevProps.status !== this.props.status) // если текущий статус не равен предыдущему то обновить
+            this.setState({
+                status: this.props.status
+            })
+        let a = this.state;
+        let b = this.props;
+        console.log('componentDidUpdate')
+    }
+
     render() {
         return (
             <div>
