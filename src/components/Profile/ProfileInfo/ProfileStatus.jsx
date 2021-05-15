@@ -36,6 +36,7 @@ class ProfileStatus extends React.Component {
             })
     }
 
+
     render() {
         return (
             <div>
@@ -50,7 +51,7 @@ class ProfileStatus extends React.Component {
                 </div>
 
                 }
-                <div>{this.state.status.length}/200</div>
+                <div> </div>
             </div>
         )
     }
