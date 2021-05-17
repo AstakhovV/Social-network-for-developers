@@ -5,12 +5,15 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {Provider} from "react-redux";
+import {BrowserRouter} from "react-router-dom";
 
 ReactDOM.render(
+    <BrowserRouter>
     <Provider store={store}>
         <App //state={store.getState()} dispatch={store.dispatch.bind(store)} store={store}
         />
-    </Provider>, // провайдер для прокидывания пропсов в компоненты
+    </Provider>
+    </BrowserRouter>, // провайдер для прокидывания пропсов в компоненты
     document.getElementById('root')
 )
 

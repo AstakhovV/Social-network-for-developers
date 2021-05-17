@@ -82,7 +82,7 @@ let mapStateToProps = (state) => {
 // } e
 // dispatch оригинал, ниже укороченная версия
 
-export default compose(WithAuthRedirect, connect(mapStateToProps,
+export default compose( connect(mapStateToProps,
     {
         follow, unfollow, setUsers, setCurrentPage,
         setUsersTotalCount, toogleIsFetching, toogleFollowingProgress,

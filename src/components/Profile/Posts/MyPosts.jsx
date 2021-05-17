@@ -7,7 +7,7 @@ import {Element} from "../../Common/Forms/FormsControls";
 
 const Textarea = Element('textarea')
 
-const maxLength10 = maxLengthCreator(10)
+const maxLength100 = maxLengthCreator(100)
 
 const MyPosts = (props) => {
     let postsElements =
@@ -34,7 +34,7 @@ const AddNewPostForm = (props) => {
         <form onSubmit={props.handleSubmit}>
             <div>
                 <Field name='newPostText' component={Textarea}
-                       placeholder='Enter your new post' validate={[required,maxLength10]}/>
+                       placeholder='Enter your new post' validate={[required,maxLength100]}/>
             </div>
             <div>
                 <button>Add Post</button>
