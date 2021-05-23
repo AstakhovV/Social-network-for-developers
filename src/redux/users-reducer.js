@@ -89,7 +89,7 @@ export const follow = (userId) => {
         dispatch(toogleFollowingProgress(true, userId))
         userApi.follow(userId)
             .then(response => {
-                if (response.data.resultCode == 0) {
+                if (response.data.resultCode === 0) {
                     dispatch(followSuccess(userId))
                 }
                 dispatch(toogleFollowingProgress(false, userId))
@@ -102,7 +102,7 @@ export const unfollow = (userId) => {
         dispatch(toogleFollowingProgress(true, userId))
         userApi.unfollow(userId)
             .then(response => {
-                if (response.data.resultCode == 0) {
+                if (response.data.resultCode === 0) {
                     dispatch(unfollowSuccess(userId))
                 }
                 dispatch(toogleFollowingProgress(false, userId))
