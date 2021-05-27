@@ -1,4 +1,5 @@
-import {userAPI as userApi, userAPI} from "../api/api";
+import {userAPI} from "../api/api";
+import {updateObjectInArray} from "../utils/object-helpers";
 
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
@@ -22,22 +23,20 @@ const usersReducer = (state = initialState, action) => {
         case  FOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: true}
-                    }
-                    return u
-                })
+                users: updateObjectInArray(
+                    state.users,
+                    action.userId,
+                    'id',
+                    {followed:true})
             }
         case  UNFOLLOW:
             return {
                 ...state,
-                users: state.users.map(u => {
-                    if (u.id === action.userId) {
-                        return {...u, followed: false}
-                    }
-                    return u
-                })
+                users: updateObjectInArray(
+                    state.users,
+                    action.userId,
+                    'id',
+                    {followed:false})
             }
         case SET_USERS: {
             return {...state, users: action.users}
@@ -73,40 +72,34 @@ export const toogleFollowingProgress = (isFetching, userId) => ({type: TOGGLE_IS
 
 
 export const getUsers = (currentPage, pageSize) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toogleIsFetching(true));
-        userAPI.getUsers(currentPage, pageSize).then(data => {
-            dispatch(toogleIsFetching(false));
-            dispatch(setUsers(data.items));
-            dispatch(setCurrentPage(currentPage))
-            dispatch(setUsersTotalCount(data.totalCount)); //запрос количество пользователей с сервера
-        })
+        dispatch(setCurrentPage(currentPage))
+        let data = await userAPI.getUsers(currentPage, pageSize);
+        dispatch(toogleIsFetching(false));
+        dispatch(setUsers(data.items));
+        dispatch(setUsersTotalCount(data.totalCount)); //запрос количество пользователей с сервера
     }
 }
 
+export const followUnfollowFlow = async (dispatch, userId, apiMethod, actionCreator) =>{
+    dispatch(toogleFollowingProgress(true, userId))
+    let response = await apiMethod(userId);
+    if (response.data.resultCode === 0) {
+        dispatch(actionCreator(userId))
+    }
+    dispatch(toogleFollowingProgress(false, userId))
+}
+
 export const follow = (userId) => {
-    return (dispatch) => {
-        dispatch(toogleFollowingProgress(true, userId))
-        userApi.follow(userId)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(followSuccess(userId))
-                }
-                dispatch(toogleFollowingProgress(false, userId))
-            })
+    return async (dispatch) => {
+        await followUnfollowFlow(dispatch, userId, userAPI.follow.bind(userAPI), followSuccess)
     }
 }
 
 export const unfollow = (userId) => {
-    return (dispatch) => {
-        dispatch(toogleFollowingProgress(true, userId))
-        userApi.unfollow(userId)
-            .then(response => {
-                if (response.data.resultCode === 0) {
-                    dispatch(unfollowSuccess(userId))
-                }
-                dispatch(toogleFollowingProgress(false, userId))
-            })
+    return async (dispatch) => {
+        await followUnfollowFlow(dispatch, userId, userAPI.unfollow.bind(userAPI), unfollowSuccess)
     }
 }
 
