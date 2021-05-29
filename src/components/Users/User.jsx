@@ -1,6 +1,6 @@
 import React from "react";
 import style from './users.module.css';
-import userPhoto from '/REACT/Social-network-for-developers/src/assets/image/user.jpeg'
+import userPhoto from '/REACT/Social-network-for-developers/src/assets/image/user.jpg'
 import {NavLink} from "react-router-dom";
 
 let Users = ({user, followingInProgress, unfollow, follow}) => {

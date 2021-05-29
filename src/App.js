@@ -51,11 +51,13 @@ let AppContainer = compose(
     withRouter,
     (connect(mapStateToProps, {initializeApp})))(App);
 
+//BrowserRouter basename={process.env.PUBLIC_URL} - для deploy
+
 const MainApp = (props) => {
- return <BrowserRouter>
-     <Provider store={store}>
-         <AppContainer/>
-     </Provider>
- </BrowserRouter>
+    return <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <Provider store={store}>
+            <AppContainer/>
+        </Provider>
+    </BrowserRouter>
 }
 export default MainApp;
