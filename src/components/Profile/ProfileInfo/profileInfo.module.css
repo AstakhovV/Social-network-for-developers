@@ -5,3 +5,11 @@
 .item {
     color: black;
 }
+.contact{
+    padding-left: 20px;
+}
+.formSummary {
+    border: solid red 1px;
+    padding: 5px;
+    color: rosybrown;
+}
