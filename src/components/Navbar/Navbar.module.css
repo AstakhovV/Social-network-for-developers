@@ -1,11 +1,21 @@
 .nav {
     grid-area: n;
     background-color: lightskyblue;
+    margin: 0px;
+    padding: 10px;
+    list-style: none;
 }
 .item a{
     color: white;
     text-decoration: none ;
+    padding: 8px 16px;
 }
+
+.item :hover {
+    display: block;
+    background-color: darkslateblue;
+}
+
 .item a.activeLink{
     color: black;
 }

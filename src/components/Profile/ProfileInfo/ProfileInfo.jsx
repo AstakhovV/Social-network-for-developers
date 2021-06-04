@@ -8,6 +8,8 @@ import ProfileDataForm from "./ProfileDataForm";
 
 const ProfileInfo = ({saveProfile,...props}) => {
     let [editMode, setEditMode] = useState(false);
+    const hiddenFileInput = React.useRef(null)
+
     if (!props.profile) {
         return <Preloader/>
     }
@@ -17,6 +19,8 @@ const ProfileInfo = ({saveProfile,...props}) => {
             props.savePhoto(e.target.files[0])
         }
     }
+
+
     const onSubmit = (formData) => {
         saveProfile(formData)
             .then(() => {
@@ -24,6 +28,9 @@ const ProfileInfo = ({saveProfile,...props}) => {
             })
     }
 
+    const handleClick = event => {
+        hiddenFileInput.current.click()
+    }
 
     return (
         <div>
@@ -31,8 +38,11 @@ const ProfileInfo = ({saveProfile,...props}) => {
                 ProfileInfo
             </div>
             <div className={s.item}>
-                <img src={props.profile.photos.large || user} className={s.photo} width={100} height={100}/>
-                {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected}/> }
+                <img class="main photo" src={props.profile.photos.large || user} className={s.photo} width={100} height={100}/>
+                <div>
+                    <button onClick={handleClick}>Upload image</button>
+                </div>
+                {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected} style={{display:'none'}} ref={hiddenFileInput}/> }
             </div>
             <div>
 
