@@ -1,7 +1,7 @@
 import React, {Suspense} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, withRouter} from "react-router-dom";
 import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import LoginPage from "./components/Login/Login";
@@ -16,9 +16,17 @@ const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileCo
 
 
 class App extends React.Component {
+    catchAllUnhandleErrors = (reason, promiseRejectionEvent) => {
+        alert('Some error occured')
+    }
     componentDidMount() {
         this.props.initializeApp()
+        window.addEventListener('unhandledrejection', this.catchAllUnhandleErrors)
     }
+    componentWillUnmount() {
+        window.removeEventListener('unhandledrejection', this.catchAllUnhandleErrors)
+    }
+
     render() {
         if (!this.props.initialized) {
             return <Preloader/>
@@ -36,6 +44,9 @@ class App extends React.Component {
                                render={() => <UsersContainer store={this.props.store}/>}/>
                         <Route path='/login'
                                render={() => <LoginPage store={this.props.store}/>}/>
+                        <Route path='/*'
+                               render={() => <div>Page not found</div>}/>
+                        <Redirect exact from="/" to="/profile" />
                     </div>
 
                 </div>

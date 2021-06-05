@@ -10,9 +10,9 @@ let initialState = {
         {id: 6, name: 'Viktor'}
     ],
     messages: [{id: 1, message: 'Hello!'},
-        {id: 2, message: 'Can you show me your pets certificate?!'},
-        {id: 3, message: 'Only your Collie'},
-        {id: 4, message: 'She is pretty good'}
+        {id: 2, message: 'I will take you on a job'},
+        {id: 3, message: 'Do you agree with that?'},
+        {id: 4, message: 'Okey'}
     ]
 }
 

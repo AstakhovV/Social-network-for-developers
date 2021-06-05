@@ -10,8 +10,6 @@ const Textarea = Element('textarea')
 const maxLength100 = maxLengthCreator(100)
 
 const MyPosts = (props) => {
-    debugger
-
     let postsElements =
         props.posts.map(p => <Posts key={p.id}
                                     message={p.message}

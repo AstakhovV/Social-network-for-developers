@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import style from './Paginator.module.css';
-import cn from "classnames";
+import cn from "classnames"; // нессколько классов вместе
 
 let Paginator = ({totalUsersCount, pageSize, currentPage ,onPageChanged, portionSize=10}) => {
     let pagesCount = Math.ceil(totalUsersCount / pageSize);
