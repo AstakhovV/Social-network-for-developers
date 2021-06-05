@@ -40,7 +40,7 @@ const ProfileInfo = ({saveProfile,...props}) => {
             <div className={s.item}>
                 <img class="main photo" src={props.profile.photos.large || user} className={s.photo} width={100} height={100}/>
                 <div>
-                    <button onClick={handleClick}>Upload image</button>
+                    <button className={s.button} onClick={handleClick}>Upload image</button>
                 </div>
                 {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected} style={{display:'none'}} ref={hiddenFileInput}/> }
             </div>
@@ -69,7 +69,7 @@ const ProfileData = ({isOwner, goToEditMode, profile}) => {
         </div>
         {isOwner &&
             <div>
-                <button onClick={goToEditMode}>Edit Profile Information</button>
+                <button className={s.button} onClick={goToEditMode}>Edit Profile Information</button>
             </div>
         }
         <div>
@@ -88,8 +88,7 @@ const ProfileData = ({isOwner, goToEditMode, profile}) => {
             return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
         })}
         </div>
-        <div></div>
-        <div></div>
+
     </div>
 
 

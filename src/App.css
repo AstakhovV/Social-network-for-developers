@@ -1,7 +1,8 @@
 .app-wrapper {
     margin: 0 auto;
     display: grid;
-    width: 1200px;
+    width: 1000px;
+
 
     grid-template-areas: "header header " "n content";
     grid-template-rows: 60px 1fr;
@@ -11,6 +12,7 @@
 
 .app-wrapper-content {
     grid-area: content;
-    background-color: lightblue;
+    background-color: lightskyblue;
+    border: 2px solid #333;
 
 }

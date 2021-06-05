@@ -13,3 +13,7 @@
     padding: 5px;
     color: rosybrown;
 }
+
+.button{
+    cursor: pointer;
+}

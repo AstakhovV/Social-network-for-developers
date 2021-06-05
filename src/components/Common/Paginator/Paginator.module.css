@@ -10,8 +10,14 @@
     cursor: pointer;
 
 }
+.paginator :hover {
+    background-color: darkslateblue;
+}
 
 .pageNumber.selectedPage {
     font-weight: bold;
     border-color: black;
+}
+.button{
+    cursor: pointer;
 }

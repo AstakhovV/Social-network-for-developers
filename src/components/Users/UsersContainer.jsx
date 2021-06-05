@@ -20,6 +20,7 @@ import {
     getPageSize,
     getTotalUsersCount
 } from "../../redux/users-selectors";
+import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 
 class UsersContainer extends React.Component { // классовая компонента юзерсАПИ
     constructor(props) {
@@ -70,5 +71,5 @@ export default compose( connect(mapStateToProps,
         follow, unfollow, setUsers, setCurrentPage,
         setUsersTotalCount, toogleIsFetching, toogleFollowingProgress,
         getUsers
-    }
-))(UsersContainer)
+    }),  WithAuthRedirect
+)(UsersContainer)

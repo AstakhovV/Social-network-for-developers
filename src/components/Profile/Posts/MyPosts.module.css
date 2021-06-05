@@ -4,3 +4,6 @@ s.postsBlock{
 s.posts{
     color: green;
 }
+.button{
+    cursor: pointer;
+}

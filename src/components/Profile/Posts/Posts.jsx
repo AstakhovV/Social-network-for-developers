@@ -6,7 +6,7 @@ const Posts = (props) => {
     return (
         <div>
             <div className={s.post}>
-                <img src={myPostIcon}/>
+                <img src={props.profile.photos.large || myPostIcon}/>
                 {props.message}
                 <div>
                     <span>Like</span> {props.likesCount}

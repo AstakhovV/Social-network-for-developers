@@ -5,11 +5,14 @@ import HeaderIcon from '../../assets/image/HeaderIcon.png'
 
 const Header = (props) => {
     return <header className={s.header}>
-        <img src={HeaderIcon} />
+        <img src={HeaderIcon}/>
+        <span className={s.mainText}>
+            Social Network for Web Developers
+            </span>
         <div className={s.loginBlock}>
             {props.isAuth
-                ? <div>{props.login} - <button onClick={props.logout}>Log Out</button></div>
-                : <NavLink to={'/login'}><button>Login</button></NavLink>}
+                ? <div>{props.login} - <button className={s.logButton} onClick={props.logout}>Log Out</button></div>
+                : <NavLink to={'/login'}><button className={s.logButton}>Login</button></NavLink>}
 
         </div>
     </header>

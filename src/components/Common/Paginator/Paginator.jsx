@@ -17,7 +17,7 @@ let Paginator = ({totalUsersCount, pageSize, currentPage ,onPageChanged, portion
 
     return <div className={style.paginator}>
         {portionNumber > 1 &&
-        <button onClick={() => {setPortionNumber(portionNumber - 1)}}> Prev </button> }
+        <button className={style.button} onClick={() => {setPortionNumber(portionNumber - 1)}}> Prev </button> }
 
 
         {pages
@@ -34,7 +34,7 @@ let Paginator = ({totalUsersCount, pageSize, currentPage ,onPageChanged, portion
 
 
         {portionCount>portionNumber &&
-        <button onClick={ () => {setPortionNumber(portionNumber + 1)}}> Next  </button>}
+        <button className={style.button} onClick={ () => {setPortionNumber(portionNumber + 1)}}> Next  </button>}
 
     </div>
 

@@ -10,8 +10,15 @@ const Textarea = Element('textarea')
 const maxLength100 = maxLengthCreator(100)
 
 const MyPosts = (props) => {
+    debugger
+
     let postsElements =
-        props.posts.map(p => <Posts key={p.id} message={p.message} likesCount={p.likesCount}/>)
+        props.posts.map(p => <Posts key={p.id}
+                                    message={p.message}
+                                    likesCount={p.likesCount}
+                                    profile={props.profile}
+                                    isOwner={props.isOwner}
+        />)
 
 
     let onAddPost = (values) => {
@@ -20,12 +27,13 @@ const MyPosts = (props) => {
     }
     return (
         <div className={s.postsBlock}>
-            <h2>My posts</h2>
-            <AddNewPostFormRedux onSubmit={onAddPost}/>
-            <div className={s.posts}>
+            {props.isOwner && <h2>My posts</h2>}
+            {props.isOwner && <AddNewPostFormRedux onSubmit={onAddPost}/>}
+            {props.isOwner && <div className={s.posts}>
                 {postsElements}
-            </div>
+            </div>}
         </div>
+
     )
 }
 
@@ -37,7 +45,7 @@ const AddNewPostForm = (props) => {
                        placeholder='Enter your new post' validate={[required,maxLength100]}/>
             </div>
             <div>
-                <button>Add Post</button>
+                <button className={s.button}>Add Post</button>
             </div>
         </form>
     )
