@@ -44,8 +44,6 @@ class App extends React.Component {
                                render={() => <UsersContainer store={this.props.store}/>}/>
                         <Route path='/login'
                                render={() => <LoginPage store={this.props.store}/>}/>
-                        <Route path='/*'
-                               render={() => <div>Page not found</div>}/>
                         <Redirect exact from="/" to="/profile" />
                     </div>
 

@@ -4,6 +4,7 @@
 }
 .item {
     color: black;
+    padding-left: 10px;
 }
 .contact{
     padding-left: 20px;
@@ -16,4 +17,18 @@
 
 .button{
     cursor: pointer;
+}
+.profileData{
+    padding-left: 10px;
+}
+.profileTitle{
+    padding-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+.userStatus:hover{
+    display: block;
+    background-color: lightgray;
+    cursor: pointer;
+
 }

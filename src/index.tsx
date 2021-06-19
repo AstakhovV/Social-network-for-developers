@@ -1,11 +1,13 @@
+// @ts-ignore
 import React from 'react';
 import './index.css';
+// @ts-ignore
 import ReactDOM from 'react-dom';
 import './index.css';
 import MainApp from "./App";
 
 ReactDOM.render(
-    <MainApp />, // провайдер для прокидывания пропсов в компоненты
+    <MainApp/>,
     document.getElementById('root')
 )
 

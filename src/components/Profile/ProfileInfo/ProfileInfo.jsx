@@ -34,7 +34,7 @@ const ProfileInfo = ({saveProfile,...props}) => {
 
     return (
         <div>
-            <div>
+            <div className={s.profileTitle}>
                 ProfileInfo
             </div>
             <div className={s.item}>
@@ -63,7 +63,7 @@ const ProfileInfo = ({saveProfile,...props}) => {
 }
 
 const ProfileData = ({isOwner, goToEditMode, profile}) => {
-    return <div>
+    return <div className={s.profileData}>
         <div>
             <b>Name</b>: {profile.fullName}
         </div>
@@ -88,6 +88,7 @@ const ProfileData = ({isOwner, goToEditMode, profile}) => {
             return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
         })}
         </div>
+        <hr/>
 
     </div>
 

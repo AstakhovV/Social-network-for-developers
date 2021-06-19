@@ -1,5 +1,13 @@
 const SEND_MESSAGE = 'SEND-MESSAGE';
 
+type DialogType = {
+    id: number,
+    name: string
+}
+type MessagesType = {
+    id: number,
+    message: string
+}
 
 let initialState = {
     dialogs: [{id: 1, name: 'Tatyana'},
@@ -8,15 +16,17 @@ let initialState = {
         {id: 4, name: 'Elena'},
         {id: 5, name: 'Marina'},
         {id: 6, name: 'Viktor'}
-    ],
+    ] as Array<DialogType>,
     messages: [{id: 1, message: 'Hello!'},
         {id: 2, message: 'I will take you on a job'},
         {id: 3, message: 'Do you agree with that?'},
         {id: 4, message: 'Okey'}
-    ]
+    ] as Array<MessagesType>
 }
 
-const dialogsReducer = (state = initialState, action) => {
+export type InitialStateType = typeof initialState
+
+const dialogsReducer = (state = initialState, action: any):InitialStateType => {
 // ... - спред оператор(оператор распространения), чтобы сделать поверхностную копию  объекта
 
     switch (action.type) {
@@ -29,7 +39,13 @@ const dialogsReducer = (state = initialState, action) => {
             return state;
     }
 }
-export const sendMessageCreator = (newMessageBody) => ({type: SEND_MESSAGE, newMessageBody });
+
+type sendMessageCreatorActionType = {
+    type: typeof SEND_MESSAGE,
+    newMessageBody: string
+}
+
+export const sendMessageCreator = (newMessageBody: string) => ({type: SEND_MESSAGE, newMessageBody });
 
 
 export default dialogsReducer;

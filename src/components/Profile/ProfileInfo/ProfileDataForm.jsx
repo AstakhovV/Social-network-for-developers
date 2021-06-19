@@ -8,7 +8,7 @@ const Input = Element('input')
 
 const ProfileDataForm = ({handleSubmit, profile, error}) => {
     return (
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={s.profileData}>
             <div>
                 <button className={s.button}>Save Profile Information
                 </button>
@@ -39,6 +39,7 @@ const ProfileDataForm = ({handleSubmit, profile, error}) => {
                 </div>
             })}
             </div>
+            <hr/>
 
         </form>
     )
