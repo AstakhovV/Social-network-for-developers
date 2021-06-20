@@ -41,7 +41,7 @@ class App extends React.Component {
                         <Route path='/profile/:userId?' // : - параметры
                                render={WitSuspenseHock(ProfileContainer)}/>
                         <Route path='/users'
-                               render={() => <UsersContainer store={this.props.store}/>}/>
+                               render={() => <UsersContainer pageTitle={'Users'}/>}/>
                         <Route path='/login'
                                render={() => <LoginPage store={this.props.store}/>}/>
                         <Redirect exact from="/" to="/profile" />

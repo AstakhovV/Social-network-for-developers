@@ -2,12 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import {
     follow,
-    setCurrentPage,
-    toogleIsFetching,
-    setUsers,
-    setUsersTotalCount,
-    unfollow, toogleFollowingProgress,
-    getUsers
+    unfollow,
+    getUsers,
 } from "../../redux/users-reducer";
 import Users from "./Users";
 import Preloader from "../Common/Preloader/Preloader";
@@ -21,25 +17,45 @@ import {
     getTotalUsersCount
 } from "../../redux/users-selectors";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
+import {UsersType} from "../../Types/CommonTypes";
+import {AppStateType} from "../../redux/redux-store";
 
-class UsersContainer extends React.Component { // классовая компонента юзерсАПИ
-    constructor(props) {
-        super(props);
-    } // конструктор можно не писать, если в нем больше ничего нет
-    //  как в данном случае. pagination - постраничный вывод
 
+type mapStateToPropsType = {
+    users: Array<UsersType>,
+    pageSize: number,
+    totalUsersCount: number,
+    followingInProgress: Array<number>,
+    isFetching: boolean,
+    currentPage: number,
+}
+
+type mapDispatchToPropsType = {
+    getUsers: (pageSize: number,currentPage: number) => void
+    follow: (userId: number) => void,
+    unfollow: (userId: number) => void,
+}
+
+type OwnPropsType = {
+    pageTitle: string,
+}
+
+type PropsType = mapDispatchToPropsType & mapStateToPropsType & OwnPropsType
+
+class UsersContainer extends React.Component<PropsType> {
     componentDidMount() {
         const {currentPage, pageSize} = this.props // деструктуризация внутри метода
         this.props.getUsers(currentPage, pageSize);
     }
 
-    onPageChanged = (pageNumber) => {
+    onPageChanged = (pageNumber: number) => {
         const {pageSize} = this.props
         this.props.getUsers(pageNumber, pageSize)
     }
 
     render() {
         return <>
+            <h2>{this.props.pageTitle}</h2>
             {this.props.isFetching ? <Preloader/> : null}
             <Users totalUsersCount={this.props.totalUsersCount}
                    pageSize={this.props.pageSize}
@@ -48,14 +64,13 @@ class UsersContainer extends React.Component { // классовая компо�
                    onPageChanged={this.onPageChanged}
                    unfollow={this.props.unfollow}
                    follow={this.props.follow}
-                   toogleFollowingProgress={this.props.toogleFollowingProgress}
                    followingInProgress={this.props.followingInProgress}
             />
         </>
     }
 }
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     return {
         users: getUsersState(state),
         pageSize: getPageSize(state),
@@ -66,10 +81,8 @@ let mapStateToProps = (state) => {
     }
 }
 
-export default compose( connect(mapStateToProps,
-    {
-        follow, unfollow, setUsers, setCurrentPage,
-        setUsersTotalCount, toogleIsFetching, toogleFollowingProgress,
-        getUsers
-    }),  WithAuthRedirect
+export default compose(connect< mapStateToPropsType,mapDispatchToPropsType, OwnPropsType, AppStateType>
+    (mapStateToProps, {
+        follow, unfollow, getUsers
+    }), WithAuthRedirect
 )(UsersContainer)

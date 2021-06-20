@@ -1,8 +1,15 @@
-import React from 'react';
-import s from '../Profile.module.css'
+import React, {ChangeEvent} from 'react';
 
+type PropsType = {
+    status: string,
+    updateStatus: (newStatus: string) => void
+}
+type StateType = {
+    editMode: boolean,
+    status: string
+}
 
-class ProfileStatus extends React.Component {
+class ProfileStatus extends React.Component<PropsType, StateType> {
     state = {
         editMode: false,
         status: this.props.status
@@ -21,21 +28,19 @@ class ProfileStatus extends React.Component {
         this.state.editMode = false
         this.props.updateStatus(this.state.status)
     }
-    onStatusChange = (e) => {
-        if(e.currentTarget.value.length <= 200){ //ограничитель ввода
+    onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
+        if(e.currentTarget.value.length <= 200){
         this.setState({
             status: e.currentTarget.value
         })}
-
     }
 
-    componentDidUpdate(prevProps: Readonly<P>, prevState: Readonly<S>, snapshot: SS) {
-        if (prevProps.status !== this.props.status) // если текущий статус не равен предыдущему то обновить
+    componentDidUpdate(prevProps: PropsType, prevState: StateType) {
+        if (prevProps.status !== this.props.status)
             this.setState({
                 status: this.props.status
             })
     }
-
 
     render() {
         return (
@@ -47,11 +52,12 @@ class ProfileStatus extends React.Component {
                 }
                 {this.state.editMode &&
                 <div>
-                    <input onChange={this.onStatusChange} autoFocus={true} onBlur={this.deactivateEditMode} value={this.state.status}></input>
+                    <input onChange={this.onStatusChange}
+                           autoFocus={true}
+                           onBlur={this.deactivateEditMode}
+                           value={this.state.status}/>
                 </div>
-
                 }
-                <div> </div>
             </div>
         )
     }
