@@ -1,10 +1,7 @@
 import React from "react";
-import {creatorField, Element} from "../../Common/Forms/FormsControls";
+import {creatorField, Textarea, Input} from "../../Common/Forms/FormsControls";
 import {reduxForm} from "redux-form";
 import s from './profileInfo.module.css'
-
-const Textarea = Element('textarea')
-const Input = Element('input')
 
 const ProfileDataForm = ({handleSubmit, profile, error}) => {
     return (
