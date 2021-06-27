@@ -6,7 +6,7 @@ import {PostType, ProfileType} from "../../../Types/CommonTypes";
 
 export type MapPropsType = {
     posts: Array<PostType>
-    profile: ProfileType
+
 }
 
 export type DispatchPropsType = {
@@ -14,6 +14,7 @@ export type DispatchPropsType = {
 }
 export type OwnPropsType = {
     isOwner: boolean
+    profile: ProfileType
 }
 const MyPosts: React.FC<MapPropsType & DispatchPropsType & OwnPropsType> = (props) => {
     let postsElements =
