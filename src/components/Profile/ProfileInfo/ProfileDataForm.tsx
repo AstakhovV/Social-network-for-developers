@@ -1,9 +1,15 @@
 import React from "react";
 import {creatorField, Textarea, Input} from "../../Common/Forms/FormsControls";
-import {reduxForm} from "redux-form";
+import {InjectedFormProps, reduxForm} from "redux-form";
 import s from './profileInfo.module.css'
+import {ProfileType} from "../../../Types/CommonTypes";
 
-const ProfileDataForm = ({handleSubmit, profile, error}) => {
+type PropsType = {
+    profile: ProfileType
+}
+type ProfileTypeKeys = Extract<keyof ProfileType, string>
+
+const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, PropsType> & PropsType> = ({handleSubmit, profile, error}) => {
     return (
         <form onSubmit={handleSubmit} className={s.profileData}>
             <div>
@@ -15,23 +21,24 @@ const ProfileDataForm = ({handleSubmit, profile, error}) => {
             </div>
             }
             <div>
-                <b>Full name</b>: {creatorField('Full name', 'fullName', [], Input)}
+                <b>Full name</b>: {creatorField<ProfileTypeKeys>('Full name', 'fullName', [], Input)}
             </div>
             <div>
                 <b>Looking for a job</b>:
-                {creatorField('', 'lookingForAJob', [], Input, {type: 'checkbox'})}
+                {creatorField<ProfileTypeKeys>('', 'lookingForAJob', [], Input, {type: 'checkbox'})}
             </div>
             <div>
                 <b>My professional skills</b>:
-                {creatorField('My professional skills', 'lookingForAJobDescription', [], Textarea)}
+                {creatorField<ProfileTypeKeys>('My professional skills', 'lookingForAJobDescription', [], Textarea)}
             </div>
             <div>
                 <b>About me</b>:
-                {creatorField('About me', 'aboutMe', [], Textarea)}
+                {creatorField<ProfileTypeKeys>('About me', 'aboutMe', [], Textarea)}
             </div>
             <div>
                 <b>Contacts</b>: {Object.keys(profile.contacts).map(key => {
                 return <div key={key} className={s.contact}>
+                    // todo: create some solution
                     <b>{key}</b>: {creatorField(key, 'contacts.' + key, [], Input)}
                 </div>
             })}
@@ -43,5 +50,5 @@ const ProfileDataForm = ({handleSubmit, profile, error}) => {
 }
 
 
-const ProfileDataReduxForm = reduxForm({form: 'editProfile'}) (ProfileDataForm)
+const ProfileDataReduxForm = reduxForm<ProfileType, PropsType>({form: 'editProfile'}) (ProfileDataForm)
 export default ProfileDataReduxForm

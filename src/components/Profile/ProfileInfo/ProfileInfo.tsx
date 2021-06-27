@@ -1,12 +1,22 @@
-import React, {useState} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import s from './profileInfo.module.css'
 import Preloader from "../../Common/Preloader/Preloader";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import user from '../../../assets/image/user.jpg'
 import ProfileDataForm from "./ProfileDataForm";
+import {ContactsType, ProfileType} from "../../../Types/CommonTypes";
 
+type PropsType = {
+    profile: ProfileType | null
+    status: string,
+    updateStatus: (status: string) => void
+    isOwner: boolean
+    savePhoto: (file: File) => void
+    saveProfile: (profile:ProfileType) => Promise<any>
 
-const ProfileInfo = ({saveProfile,...props}) => {
+}
+
+const ProfileInfo: React.FC<PropsType> = ({saveProfile, ...props}) => {
     let [editMode, setEditMode] = useState(false);
     const hiddenFileInput = React.useRef(null)
 
@@ -14,21 +24,23 @@ const ProfileInfo = ({saveProfile,...props}) => {
         return <Preloader/>
     }
 
-    const onMainPhotoSelected = (e) => {
-        if (e.target.files.length) {
+    const onMainPhotoSelected = (e: ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files?.length) {
             props.savePhoto(e.target.files[0])
         }
     }
 
 
-    const onSubmit = (formData) => {
+    const onSubmit = (formData: ProfileType) => {
+        // todo: remove then
         saveProfile(formData)
             .then(() => {
                 setEditMode(false)
             })
     }
 
-    const handleClick = event => {
+    const handleClick = () => {
+        // @ts-ignore
         hiddenFileInput.current.click()
     }
 
@@ -38,9 +50,9 @@ const ProfileInfo = ({saveProfile,...props}) => {
                 ProfileInfo
             </div>
             <div className={s.item}>
-                <img class="main photo" src={props.profile.photos.large || user} className={s.photo} width={100} height={100}/>
-                <div>
-                    <button className={s.button} onClick={handleClick}>Upload image</button>
+                <img src={props.profile.photos.large || user} className={s.photo} width={100} height={100}/>
+                <div>{props.isOwner && <button className={s.button} onClick={handleClick}>Upload image</button>
+                }
                 </div>
                 {props.isOwner && <input type={'file'} onChange={onMainPhotoSelected} style={{display:'none'}} ref={hiddenFileInput}/> }
             </div>
@@ -62,7 +74,13 @@ const ProfileInfo = ({saveProfile,...props}) => {
     )
 }
 
-const ProfileData = ({isOwner, goToEditMode, profile}) => {
+type ProfileDaraPropsType = {
+    isOwner: boolean,
+    goToEditMode: () => void,
+    profile: ProfileType
+}
+
+const ProfileData: React.FC<ProfileDaraPropsType> = ({isOwner, goToEditMode, profile}) => {
     return <div className={s.profileData}>
         <div>
             <b>Name</b>: {profile.fullName}
@@ -85,7 +103,7 @@ const ProfileData = ({isOwner, goToEditMode, profile}) => {
         </div>
         <div>
             <b>Contacts</b>: {Object.keys(profile.contacts).map(key => {
-            return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
+            return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key as keyof ContactsType]}/>
         })}
         </div>
         <hr/>
@@ -95,8 +113,11 @@ const ProfileData = ({isOwner, goToEditMode, profile}) => {
 
 }
 
-
-const Contact = ({contactTitle,contactValue}) => {
+type ContactsPropsType = {
+    contactTitle: string
+    contactValue: string
+}
+const Contact: React.FC<ContactsPropsType> = ({contactTitle,contactValue}) => {
     return <div className={s.contact}><b>{contactTitle}</b>: <b>{contactValue}</b></div>
 }
 

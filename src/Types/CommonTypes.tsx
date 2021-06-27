@@ -24,10 +24,12 @@ export type ProfileType = {
     fullName: string,
     contacts: ContactsType,
     photos: PhotosType,
+    aboutMe: string
 }
 export type UsersType = {
-    id: string,
+    id: number,
     name: string,
     status: string,
     photos: PhotosType,
+    followed: boolean
 }

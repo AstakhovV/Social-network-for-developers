@@ -37,7 +37,6 @@ type mapDispatchToPropsType = {
 }
 
 type OwnPropsType = {
-    pageTitle: string,
 }
 
 type PropsType = mapDispatchToPropsType & mapStateToPropsType & OwnPropsType
@@ -55,7 +54,7 @@ class UsersContainer extends React.Component<PropsType> {
 
     render() {
         return <>
-            <h2>{this.props.pageTitle}</h2>
+            <h2>Users</h2>
             {this.props.isFetching ? <Preloader/> : null}
             <Users totalUsersCount={this.props.totalUsersCount}
                    pageSize={this.props.pageSize}
@@ -81,7 +80,7 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => {
     }
 }
 
-export default compose(connect< mapStateToPropsType,mapDispatchToPropsType, OwnPropsType, AppStateType>
+export default compose<React.ComponentType>(connect< mapStateToPropsType,mapDispatchToPropsType, OwnPropsType, AppStateType>
     (mapStateToProps, {
         follow, unfollow, getUsers
     }), WithAuthRedirect
