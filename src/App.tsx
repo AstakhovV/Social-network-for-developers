@@ -2,15 +2,15 @@ import React, {ComponentType, Suspense} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import {BrowserRouter, Redirect, Route, withRouter} from "react-router-dom";
-import UsersContainer from "./components/Users/UsersContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import LoginPage from "./components/Login/Login";
+import { LoginPage } from "./components/Login/LoginPage";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/Common/Preloader/Preloader";
 import store, {AppStateType} from "./redux/redux-store";
 import {WithSuspenseHock} from "./hoc/WithSuspenseHock";
+import { UsersPage } from './components/Users/UsersContainer';
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 
@@ -45,10 +45,10 @@ class App extends React.Component <MapPropsType  & DispatchPropsType> {
                     <div className='app-wrapper-content'>
                         <Route path='/dialogs'
                                render={ () => <SuspendedDialogs/>}/>
-                        <Route path='/profile/:userId?' // : - параметры
+                        <Route path='/profile/:userId?'
                                render={() => <SuspendedProfile/>}/>
                         <Route path='/users'
-                               render={() => <UsersContainer/>}/>
+                               render={() => <UsersPage />}/>
                         <Route path='/login'
                                render={() => <LoginPage/>}/>
                         <Redirect exact from="/" to="/profile" />
@@ -67,7 +67,6 @@ let AppContainer = compose<ComponentType>(
     withRouter,
     (connect(mapStateToProps, {initializeApp})))(App);
 
-//BrowserRouter basename={process.env.PUBLIC_URL} - для deploy
 
 const MainApp: React.FC = () => {
     return <BrowserRouter basename={process.env.PUBLIC_URL}>
