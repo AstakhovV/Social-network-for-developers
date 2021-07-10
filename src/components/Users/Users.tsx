@@ -12,11 +12,14 @@ import {
     getUsersFilter,
     getUsersState
 } from "../../redux/users-selectors";
+import { useHistory } from "react-router-dom";
+import * as queryString from "querystring";
 
 type PropsType = {
     portionSize?: number,
 }
 
+type QueryParamsType = { term?: string, page?: string, friend?: string };
 export const Users: React.FC<PropsType> = (props) => {
 
     const users: Array<UsersType> = useSelector(getUsersState)
@@ -27,10 +30,42 @@ export const Users: React.FC<PropsType> = (props) => {
     const followingInProgress: Array<number> = useSelector(getFollowingInProgress)
 
     const dispatch = useDispatch()
+    const history = useHistory()
+
 
     useEffect(()=>{
-        dispatch(getUsers(currentPage, pageSize, filter));
+        const parsed = queryString.parse(history.location.search.substr(1))  as QueryParamsType
+        let actualPage = currentPage
+        let actualFilter = filter
+        if(!!parsed.page) actualPage = Number(parsed.page)
+        if(!!parsed.term) actualFilter = {...actualFilter, term:parsed.term as string}
+        switch (parsed.friend) {
+            case 'null':
+                actualFilter = {...actualFilter, friend: null}
+                break
+            case 'true':
+                actualFilter = {...actualFilter, friend: true}
+                break
+            case 'false':
+                actualFilter = {...actualFilter, friend: false}
+                break
+        }
+
+        dispatch(getUsers(actualPage, pageSize, actualFilter));
     }, [])
+
+    useEffect(()=>{
+        const query: QueryParamsType = {}
+
+        if(!!filter.term) query.term = filter.term
+        if(currentPage !==1) query.page = String(currentPage)
+        if(filter.friend !== null) query.friend = String(filter.friend)
+
+        history.push({
+            pathname: '/users',
+            search: queryString.stringify(query)
+        })
+    }, [filter, currentPage])
 
     const onPageChanged = (pageNumber: number) =>{
         dispatch(getUsers(pageNumber, pageSize, filter))

@@ -1,7 +1,7 @@
 import React, {ComponentType, Suspense} from 'react';
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
-import {BrowserRouter, Redirect, Route, withRouter} from "react-router-dom";
+import {BrowserRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import { LoginPage } from "./components/Login/LoginPage";
 import {connect, Provider} from "react-redux";
@@ -43,15 +43,20 @@ class App extends React.Component <MapPropsType  & DispatchPropsType> {
                     <HeaderContainer/>
                     <Navbar/>
                     <div className='app-wrapper-content'>
-                        <Route path='/dialogs'
-                               render={ () => <SuspendedDialogs/>}/>
-                        <Route path='/profile/:userId?'
-                               render={() => <SuspendedProfile/>}/>
-                        <Route path='/users'
-                               render={() => <UsersPage />}/>
-                        <Route path='/login'
-                               render={() => <LoginPage/>}/>
-                        <Redirect exact from="/" to="/profile" />
+                        <Switch>
+                            <Route exact path='/'
+                                   render={() => <Redirect to={"/profile"}/>}/>
+                            <Route path='/dialogs'
+                                   render={() => <SuspendedDialogs/>}/>
+                            <Route path='/profile/:userId?'
+                                   render={() => <SuspendedProfile/>}/>
+                            <Route path='/users'
+                                   render={() => <UsersPage/>}/>
+                            <Route path='/login'
+                                   render={() => <LoginPage/>}/>
+                            <Route path='*'
+                                   render={() => <div>404 NOT FOUND</div>}/>
+                        </Switch>
                     </div>
 
                 </div>
