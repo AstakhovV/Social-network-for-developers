@@ -62,7 +62,7 @@ export const Users: React.FC<PropsType> = (props) => {
         if(filter.friend !== null) query.friend = String(filter.friend)
 
         history.push({
-            pathname: '/users',
+            pathname: '/developers',
             search: queryString.stringify(query)
         })
     }, [filter, currentPage])
