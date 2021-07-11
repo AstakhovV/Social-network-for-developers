@@ -85,6 +85,7 @@ export const Users: React.FC<PropsType> = (props) => {
 
         return (
         <div>
+
             <UsersSearchForm onFilterChanged={onFilterChanged}/>
             <Paginator currentPage={currentPage}
                        onPageChanged={onPageChanged}

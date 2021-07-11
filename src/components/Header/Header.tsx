@@ -1,10 +1,12 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import {Avatar, Button, Col, Layout, Menu, Row} from "antd";
-import {GithubOutlined, UserOutlined} from '@ant-design/icons';
+import {Avatar, Button, Col, Layout, Row} from "antd";
+import {GithubOutlined} from '@ant-design/icons';
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuth, selectLogin} from "../../redux/auth-selectors";
 import {logout} from "../../redux/auth-reducer";
+import {AppStateType} from "../../redux/redux-store";
+import {UserOutlined} from '@ant-design/icons';
 
 const { Header } = Layout;
 
@@ -12,6 +14,9 @@ const { Header } = Layout;
 export const HeaderApp: React.FC = (props) => {
     const isAuth = useSelector(selectIsAuth)
     const login = useSelector(selectLogin)
+    const profile = useSelector((state: AppStateType) => {
+        return state.profilePage.profile
+    })
 
     const dispatch = useDispatch()
     const logoutCallback = () => {
@@ -20,20 +25,26 @@ export const HeaderApp: React.FC = (props) => {
 
     return <Header className="header">
         <Row>
-            <Col span={17}>
+            <Col span={1}>
                 <a href='https://github.com/AstakhovV' target="_blank">{<GithubOutlined/>}</a>
+            </Col>
+            <Col span={18}>
+                <p style={{color: "white"}}> Social Network for Web Developers</p>
             </Col>
             {isAuth
                 ? <>
-                    <Col span={4}>
-                        <Avatar style={{backgroundColor: '#87d068'}} icon={<UserOutlined/>}/>
+                    <Col span={1}>
+                        <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
+                    </Col>
+                    <Col span={2}>
+                        <p style={{color: "white"}}>{login}</p>
                     </Col>
                     <Col span={2}>
                         <Button onClick={logoutCallback}>Log Out</Button>
                     </Col>
                 </>
                 :
-                <Col span={6}>
+                <Col span={5}>
                     <Button>
                         <Link to={'/login'}>Login</Link>
                     </Button>
@@ -41,20 +52,4 @@ export const HeaderApp: React.FC = (props) => {
             }
         </Row>
     </Header>
-
 }
-
-
-/*
-<header className={s.header}>
-    <img src={HeaderIcon}/>
-    <span className={s.mainText}>
-            Social Network for Web Developers
-            </span>
-    <div className={s.loginBlock}>
-        {props.isAuth
-            ? <div>{props.login} - <button className={s.logButton} onClick={props.logout}>Log Out</button></div>
-            : <NavLink to={'/login'}><button className={s.logButton}>Login</button></NavLink>}
-
-    </div>
-</header>*/

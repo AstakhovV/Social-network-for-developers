@@ -1,5 +1,6 @@
-import loader from "../../../assets/image/loader.gif";
+
 import React from "react";
+import {Spin} from "antd";
 
 type PropsType = {
 
@@ -7,7 +8,7 @@ type PropsType = {
 
 let Preloader: React.FC<PropsType> = () => {
     return <div>
-        <img src={loader}/>
+        <Spin size="large" />
     </div>
 
 }
