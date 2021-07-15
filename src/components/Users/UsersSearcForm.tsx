@@ -3,6 +3,7 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 import {FilterType} from "../../redux/users-reducer";
 import {useSelector} from "react-redux";
 import {getUsersFilter} from "../../redux/users-selectors";
+import {Input} from "formik-antd";
 
 
 
@@ -45,7 +46,7 @@ let UsersSearchForm: React.FC<PropsType> = React.memo((props) => {
             >
                 {({isSubmitting}) => (
                     <Form>
-                        <Field name="term" type="text"/>
+                        <Input name="term" type="text"/>
                         <Field name="friend" as="select">
                             <option value="null">All</option>
                             <option value="true">Only followed</option>

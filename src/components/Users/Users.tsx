@@ -14,6 +14,8 @@ import {
 } from "../../redux/users-selectors";
 import { useHistory } from "react-router-dom";
 import * as queryString from "querystring";
+import {Col, List, Row} from "antd";
+
 
 type PropsType = {
     portionSize?: number,
@@ -83,14 +85,28 @@ export const Users: React.FC<PropsType> = (props) => {
 
     }
 
-        return (
-        <div>
+    const data: any[] | undefined = ['']
+    return (
+        <>
+            <List
+                size="small"
+                header={
+                    <Row>
+                        <Col flex={3}>
+                            <UsersSearchForm onFilterChanged={onFilterChanged}/>
+                        </Col>
+                        <Col flex={3}>
+                            <Paginator currentPage={currentPage}
+                                       onPageChanged={onPageChanged}
+                                       totalUsersCount={totalUsersCount}
+                                       pageSize={pageSize}/>
+                        </Col>
+                    </Row>}
+                bordered
+                dataSource={data}
+                renderItem={item => <List.Item>{item}</List.Item>}
+            />
 
-            <UsersSearchForm onFilterChanged={onFilterChanged}/>
-            <Paginator currentPage={currentPage}
-                       onPageChanged={onPageChanged}
-                       totalUsersCount={totalUsersCount}
-                       pageSize={pageSize}/>
             <div>
                 {users.map(u => <User user={u} key={u.id}
                                       followingInProgress={followingInProgress}
@@ -98,7 +114,6 @@ export const Users: React.FC<PropsType> = (props) => {
                                       follow={followSuccess}/>
                 )}
             </div>
-
-        </div>
+        </>
     )
 }

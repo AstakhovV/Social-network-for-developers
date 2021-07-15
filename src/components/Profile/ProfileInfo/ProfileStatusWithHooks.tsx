@@ -1,5 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import s from "./profileInfo.module.css";
+import {Input} from "antd";
 
 type PropsType = {
     status: string
@@ -27,13 +28,13 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
         return (
             <div className={s.profileData}>
                 {!editMode &&
-                <div className={s.userStatus}>
-                    <b>Status</b>: <span onClick={activateEditMode}>{props.status || "No status"} </span>
+                <div className={s.userStatus} onClick={activateEditMode}>
+                    <b>Status</b>: <span >{props.status || "No status"} </span>
                 </div>
                 }
                 {editMode &&
                 <div>
-                    <input onChange={onStatusChange}
+                    <Input onChange={onStatusChange}
                            autoFocus={true}
                            onBlur={deactivateEditMode}
                            value={status}

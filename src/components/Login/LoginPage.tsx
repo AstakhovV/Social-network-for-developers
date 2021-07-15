@@ -1,12 +1,13 @@
 import React from "react";
 import {InjectedFormProps, reduxForm} from "redux-form";
 import {useDispatch, useSelector} from "react-redux";
-import {getCaptchaUrl, login} from "../../redux/auth-reducer";
-import {creatorField, Input} from "../Common/Forms/FormsControls";
+import {login} from "../../redux/auth-reducer";
+import {creatorField, InputReduxForm} from "../Common/Forms/FormsControls";
 import {required} from "../../utils/validators/validators";
 import {Redirect} from "react-router-dom";
 import s from "./Login.module.css"
 import {AppStateType} from "../../redux/redux-store";
+import {Button, Col, Divider, Row} from "antd";
 
 
 type LoginFormOwnProps = {
@@ -14,30 +15,42 @@ type LoginFormOwnProps = {
 }
 
 const LoginForm: React.FC<InjectedFormProps<LoginFormValuesType, LoginFormOwnProps> & LoginFormOwnProps> = ({handleSubmit, error, captchaUrl}) => { //деструктуризация - прописывают нужные пропсы
+
+
     return (
-        <div className={s.loginForm}>
+        <div>
             <form onSubmit={handleSubmit}>
-                <div>
-                    {creatorField<LoginFormValuesTypeKeys>('Email', 'email', [required], Input)}
+                <div  className={s.loginForm}>
+                    {creatorField<LoginFormValuesTypeKeys>('Email', 'email', [required], InputReduxForm)}
+                </div>
+                <div  className={s.loginForm}>
+                    {creatorField<LoginFormValuesTypeKeys>('Password', 'password', [required], InputReduxForm, {type: "password"})}
 
                 </div>
-                <div>
-                    {creatorField<LoginFormValuesTypeKeys>('Password', 'password', [required], Input, {type: "password"})}
-
+                <div className={s.loginFormCaptcha}>
+                    {captchaUrl && <img src={captchaUrl} alt={captchaUrl}/>}
                 </div>
-                <div className={s.checkbox}>
-                    {creatorField<LoginFormValuesTypeKeys>(undefined, 'rememberMe', [], Input, {type: "checkbox"}, 'Remember me')}
+                <div className={s.dialogsForm}>
+                    {captchaUrl && creatorField<LoginFormValuesTypeKeys>('Symbols from image', 'captcha', [], InputReduxForm)}
                 </div>
-                {captchaUrl && <img src={captchaUrl} alt={captchaUrl}/>}
-                {captchaUrl && creatorField<LoginFormValuesTypeKeys>('Symbols from image', 'captcha', [], Input)}
-                {captchaUrl && <button className={s.buttonUpdateCaptcha}>{getCaptchaUrl()}Update Captcha</button>}
                 {error && <div className={s.formSummary}>
                     {error}
                 </div>
                 }
-                <div className={s.buttonLogin}>
-                    <button>Login</button>
-                </div>
+                <Row>
+                    <Col flex={3}>
+                        <div className={s.checkbox}>
+                            {creatorField<LoginFormValuesTypeKeys>(undefined, 'rememberMe', [], InputReduxForm, {type: "checkbox"}, 'Remember me')}
+                        </div>
+                    </Col>
+                    <Col flex={3}>
+                        <div className={s.buttonLogin}>
+                            <Button onClick={handleSubmit}>Login</Button>
+                        </div>
+                    </Col>
+                </Row>
+
+
             </form>
         </div>
     )
@@ -69,7 +82,7 @@ export const LoginPage: React.FC = (props) => {
         return <Redirect to={'/profile'}/>
     }
     return <div>
-        <h1>LOGIN</h1>
+        <Divider orientation="left">Login</Divider>
         <LoginReduxForm onSubmit={onSubmit}
                         captchaUrl={captchaUrl}
         />

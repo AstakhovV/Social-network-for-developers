@@ -5,7 +5,6 @@ import {GithubOutlined} from '@ant-design/icons';
 import {useDispatch, useSelector} from "react-redux";
 import {selectIsAuth, selectLogin} from "../../redux/auth-selectors";
 import {logout} from "../../redux/auth-reducer";
-import {AppStateType} from "../../redux/redux-store";
 import {UserOutlined} from '@ant-design/icons';
 
 const { Header } = Layout;
@@ -14,9 +13,6 @@ const { Header } = Layout;
 export const HeaderApp: React.FC = (props) => {
     const isAuth = useSelector(selectIsAuth)
     const login = useSelector(selectLogin)
-    const profile = useSelector((state: AppStateType) => {
-        return state.profilePage.profile
-    })
 
     const dispatch = useDispatch()
     const logoutCallback = () => {
@@ -28,12 +24,12 @@ export const HeaderApp: React.FC = (props) => {
             <Col span={1}>
                 <a href='https://github.com/AstakhovV' target="_blank">{<GithubOutlined/>}</a>
             </Col>
-            <Col span={18}>
+            <Col span={17}>
                 <p style={{color: "white"}}> Social Network for Web Developers</p>
             </Col>
             {isAuth
                 ? <>
-                    <Col span={1}>
+                    <Col span={2}>
                         <Avatar style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
                     </Col>
                     <Col span={2}>

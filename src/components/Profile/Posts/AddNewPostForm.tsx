@@ -3,6 +3,7 @@ import {creatorField, Textarea} from "../../Common/Forms/FormsControls";
 import {maxLengthCreator, required} from "../../../utils/validators/validators";
 import s from "./MyPosts.module.css";
 import React from "react";
+import { Button } from "antd";
 
 type PropsType = {
 }
@@ -20,8 +21,8 @@ export const AddNewPostForm: React.FC<InjectedFormProps<AddPostValuesType, Props
             <div>
                 {creatorField<PostFormValuesTypeKeys>('Enter your new post', 'newPostText', [required, maxLength100], Textarea )}
             </div>
-            <div>
-                <button className={s.button}>Add Post</button>
+            <div style={{marginTop: '10px'}}>
+                <Button onClick={props.handleSubmit} className={s.button}>Add Post</Button>
             </div>
         </form>
     )

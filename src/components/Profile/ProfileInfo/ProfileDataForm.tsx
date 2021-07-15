@@ -1,8 +1,9 @@
 import React from "react";
-import {creatorField, Textarea, Input} from "../../Common/Forms/FormsControls";
+import {creatorField, Textarea, InputReduxForm} from "../../Common/Forms/FormsControls";
 import {InjectedFormProps, reduxForm} from "redux-form";
 import s from './profileInfo.module.css'
 import {ProfileType} from "../../../Types/CommonTypes";
+import { Button } from "antd";
 
 type PropsType = {
     profile: ProfileType
@@ -12,20 +13,17 @@ type ProfileTypeKeys = Extract<keyof ProfileType, string>
 const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, PropsType> & PropsType> = ({handleSubmit, profile, error}) => {
     return (
         <form onSubmit={handleSubmit} className={s.profileData}>
-            <div>
-                <button className={s.button}>Save Profile Information
-                </button>
-            </div>
+
             {error && <div className={s.formSummary}>
                 {error}
             </div>
             }
             <div>
-                <b>Full name</b>: {creatorField<ProfileTypeKeys>('Full name', 'fullName', [], Input)}
+                <b>Full name</b>: {creatorField<ProfileTypeKeys>('Full name', 'fullName', [], InputReduxForm)}
             </div>
             <div>
                 <b>Looking for a job</b>:
-                {creatorField<ProfileTypeKeys>('', 'lookingForAJob', [], Input, {type: 'checkbox'})}
+                {creatorField<ProfileTypeKeys>('', 'lookingForAJob', [], InputReduxForm, {type: 'checkbox'})}
             </div>
             <div>
                 <b>My professional skills</b>:
@@ -38,12 +36,15 @@ const ProfileDataForm: React.FC<InjectedFormProps<ProfileType, PropsType> & Prop
             <div>
                 <b>Contacts</b>: {Object.keys(profile.contacts).map(key => {
                 return <div key={key} className={s.contact}>
-                    // todo: create some solution
-                    <b>{key}</b>: {creatorField(key, 'contacts.' + key, [], Input)}
+                    <b>{key}</b>: {creatorField(key, 'contacts.' + key, [], InputReduxForm)}
                 </div>
             })}
             </div>
             <hr/>
+            <div>
+                <Button onClick={handleSubmit} className={s.buttonSaveProfile}>Save Profile Information
+                </Button>
+            </div>
 
         </form>
     )

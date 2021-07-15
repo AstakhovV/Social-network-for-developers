@@ -44,10 +44,10 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
 
     let loginData = await authAPI.login(email, password, rememberMe, captcha);
     if (loginData.resultCode === ResultCodesEnum.Success) {
-        dispatch(getAuthUserData())
+        await dispatch(getAuthUserData())
     } else {
         if (loginData.resultCode === ResultCodeCaptchaEnum.CaptchaIsRequired) {
-            dispatch(getCaptchaUrl())
+            await dispatch(getCaptchaUrl())
 
         }
         let message = loginData.messages.length > 0

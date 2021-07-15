@@ -1,8 +1,9 @@
 import React from 'react';
-import MyPostsContainer from "./Posts/MyPostsContainer";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import Preloader from "../Common/Preloader/Preloader";
 import {ProfileType} from "../../Types/CommonTypes";
+import {Col, Divider, Row} from "antd";
+import MyPosts from "./Posts/MyPosts";
 
 
 type PropsType = {
@@ -20,17 +21,24 @@ const Profile: React.FC<PropsType> = (props) => {
     }
     return (
         <div>
-            <ProfileInfo profile={props.profile}
-                         isOwner={props.isOwner}
-                         status={props.status}
-                         updateStatus={props.updateStatus}
-                         savePhoto={props.savePhoto}
-                         saveProfile={props.saveProfile}
-            />
-            <MyPostsContainer
-                profile={props.profile}
-                isOwner={props.isOwner}
-            />
+            <Divider orientation="left">Profile Info</Divider>
+            <Row>
+                <Col flex={3}>
+                    <ProfileInfo profile={props.profile}
+                                 isOwner={props.isOwner}
+                                 status={props.status}
+                                 updateStatus={props.updateStatus}
+                                 savePhoto={props.savePhoto}
+                                 saveProfile={props.saveProfile}
+                    />
+                </Col>
+                <Col flex={3}>
+                    <MyPosts
+                        profile={props.profile}
+                        isOwner={props.isOwner}
+                    />
+                </Col>
+            </Row>
         </div>
     )
 }

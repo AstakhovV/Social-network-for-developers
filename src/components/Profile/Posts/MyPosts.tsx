@@ -2,23 +2,23 @@ import React from 'react';
 import s from './MyPosts.module.css'
 import Posts from "./Posts";
 import {AddNewPostFormRedux, AddPostValuesType} from "./AddNewPostForm";
-import {PostType, ProfileType} from "../../../Types/CommonTypes";
+import { ProfileType} from "../../../Types/CommonTypes";
+import {useDispatch, useSelector} from "react-redux";
+import {getPosts} from "../../../redux/profile-selectors";
+import {actions} from "../../../redux/profile-reducer";
 
-export type MapPropsType = {
-    posts: Array<PostType>
 
-}
-
-export type DispatchPropsType = {
-    addPost: (newPostText: string) => void
-}
 export type OwnPropsType = {
     isOwner: boolean
     profile: ProfileType
 }
-const MyPosts: React.FC<MapPropsType & DispatchPropsType & OwnPropsType> = (props) => {
+const MyPosts: React.FC<OwnPropsType> = (props) => {
+
+    const posts = useSelector(getPosts)
+    const dispatch = useDispatch()
+
     let postsElements =
-        props.posts.map(p => <Posts key={p.id}
+        posts.map(p => <Posts key={p.id}
                                     message={p.message}
                                     likesCount={p.likesCount}
                                     profile={props.profile}
@@ -27,7 +27,7 @@ const MyPosts: React.FC<MapPropsType & DispatchPropsType & OwnPropsType> = (prop
 
 
     let onAddPost = (values: AddPostValuesType) => {
-        props.addPost(values.newPostText);
+        dispatch(actions.addPostActionCreator(values.newPostText));
 
     }
     return (

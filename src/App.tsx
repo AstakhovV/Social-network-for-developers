@@ -1,20 +1,17 @@
-import React, {ComponentType} from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import 'antd/dist/antd.css';
-import {BrowserRouter, Link, Redirect, Route, Switch, withRouter} from "react-router-dom";
+import {Link, Redirect, Route, Switch, useLocation, withRouter} from "react-router-dom";
 import {LoginPage} from "./components/Login/LoginPage";
-import {connect, Provider} from "react-redux";
-import {compose} from "redux";
+import {useDispatch, useSelector} from "react-redux";
 import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/Common/Preloader/Preloader";
-import store, {AppStateType} from "./redux/redux-store";
 import {WithSuspenseHock} from "./hoc/WithSuspenseHock";
-import {UsersPage} from './components/Users/UsersContainer';
+import {UsersContainer} from './components/Users/UsersContainer';
 import {Breadcrumb, Layout, Menu} from 'antd';
-import {LaptopOutlined, NotificationOutlined, UserOutlined} from '@ant-design/icons';
+import {TeamOutlined, SettingOutlined, UserOutlined} from '@ant-design/icons';
 import {HeaderApp} from './components/Header/Header';
-import { Footer } from 'antd/lib/layout/layout';
-
+import {selectorInitialized} from "./redux/app-selectors";
 
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
@@ -22,32 +19,42 @@ const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsCo
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
-
-type MapPropsType = ReturnType<typeof mapStateToProps>
-type DispatchPropsType = {
-    initializeApp: () => void
-}
-
 const SuspendedDialogs = WithSuspenseHock(DialogsContainer)
 const SuspendedProfile = WithSuspenseHock(ProfileContainer)
 
-class App extends React.Component <MapPropsType  & DispatchPropsType> {
-    catchAllUnhandleErrors = (e: PromiseRejectionEvent) => {
-        alert('Some error occurred')
+type AppPropsType = {
+}
+
+const App: React.FC<AppPropsType> = () => {
+
+    const initialized = useSelector(selectorInitialized)
+    const dispatch = useDispatch()
+    const location = useLocation()
+    const breadCrumbView = () => {
+        const { pathname } = location
+        return pathname.split('/').filter(item => item)[0]
     }
-    componentDidMount() {
-        this.props.initializeApp()
-        window.addEventListener('unhandledrejection', this.catchAllUnhandleErrors)
-    }
-    componentWillUnmount() {
-        window.removeEventListener('unhandledrejection', this.catchAllUnhandleErrors)
+    let pathnameURL = breadCrumbView ()
+    let pathnameCrumb = ''
+    if (pathnameURL){
+        pathnameCrumb = pathnameURL[0].toUpperCase() + pathnameURL.slice(1)
     }
 
-    render() {
-        if (!this.props.initialized) {
-            return <Preloader/>
+
+    const catchAllUnhandledErrors = (e: PromiseRejectionEvent) => {
+        alert('Some error occurred')
+    }
+    useEffect(() => {
+        dispatch(initializeApp())
+        window.addEventListener('unhandledrejection', catchAllUnhandledErrors)
+        return () => {
+            window.removeEventListener('unhandledrejection', catchAllUnhandledErrors)
         }
-        return (
+    }, [])
+
+    return (
+        (!initialized) ?
+            <Preloader/> :
             <Layout>
                 <HeaderApp/>
                 <Layout>
@@ -56,31 +63,27 @@ class App extends React.Component <MapPropsType  & DispatchPropsType> {
                             mode="inline"
                             //defaultSelectedKeys={['1']}
                             //defaultOpenKeys={['sub1']}
-                            style={{ height: '100%', borderRight: 0 }}
+                            style={{height: '100%', borderRight: 0}}
                         >
-                            <SubMenu key="sub1" icon={<UserOutlined />} title="My profile">
+                            <SubMenu key="sub1" icon={<UserOutlined/>} title="My profile">
                                 <Menu.Item key="1"><Link to="/profile">Profile </Link>
                                 </Menu.Item>
                                 <Menu.Item key="2"><Link to="/dialogs">Dialogs</Link>
                                 </Menu.Item>
                             </SubMenu>
-                            <SubMenu key="sub2" icon={<LaptopOutlined />} title="Developers">
-                                <Menu.Item key="5"><Link to="/developers">All Users</Link>
+                            <SubMenu key="sub2" icon={<TeamOutlined />} title="Users">
+                                <Menu.Item key="3"><Link to="/developers">Developers</Link>
                                 </Menu.Item>
                             </SubMenu>
-                            <SubMenu key="sub3" icon={<NotificationOutlined />} title="Settings">
-                                <Menu.Item key="9">option9</Menu.Item>
-                                <Menu.Item key="10">option10</Menu.Item>
-                                <Menu.Item key="11">option11</Menu.Item>
-                                <Menu.Item key="12">option12</Menu.Item>
+                            <SubMenu key="sub3" icon={<SettingOutlined />} title="Settings">
+                                <Menu.Item key="4"><Link to="/settings">Main settings</Link></Menu.Item>
                             </SubMenu>
                         </Menu>
                     </Sider>
-                    <Layout style={{ padding: '0 24px 24px' }}>
-                        <Breadcrumb style={{ margin: '16px 0' }}>
-                            <Breadcrumb.Item>Home</Breadcrumb.Item>
-                            <Breadcrumb.Item>List</Breadcrumb.Item>
-                            <Breadcrumb.Item>App</Breadcrumb.Item>
+                    <Layout style={{padding: '0 24px 24px'}}>
+                        <Breadcrumb style={{margin: '16px 0'}}>
+                            <Breadcrumb.Item><Link to="/profile">Home</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item><Link to={`/${pathnameURL}`} >{pathnameCrumb}</Link></Breadcrumb.Item>
                         </Breadcrumb>
                         <Content
                             className="site-layout-background"
@@ -98,7 +101,7 @@ class App extends React.Component <MapPropsType  & DispatchPropsType> {
                                 <Route path='/profile/:userId?'
                                        render={() => <SuspendedProfile/>}/>
                                 <Route path='/developers'
-                                       render={() => <UsersPage/>}/>
+                                       render={() => <UsersContainer/>}/>
                                 <Route path='/login'
                                        render={() => <LoginPage/>}/>
                                 <Route path='*'
@@ -107,26 +110,7 @@ class App extends React.Component <MapPropsType  & DispatchPropsType> {
                         </Content>
                     </Layout>
                 </Layout>
-                <Footer style={{ textAlign: 'center' }}>AstakhovV</Footer>
             </Layout>
-        );
-    }
+    )
 }
-
-const mapStateToProps = (state: AppStateType) => ({
-    initialized: state.app.initialized
-})
-
-let AppContainer = compose<ComponentType>(
-    withRouter,
-    (connect(mapStateToProps, {initializeApp})))(App);
-
-
-const MainApp: React.FC = () => {
-    return <BrowserRouter basename={process.env.PUBLIC_URL}>
-        <Provider store={store}>
-            <AppContainer/>
-        </Provider>
-    </BrowserRouter>
-}
-export default MainApp;
+export const AppContainer = withRouter(App)

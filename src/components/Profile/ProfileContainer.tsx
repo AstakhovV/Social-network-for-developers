@@ -7,6 +7,7 @@ import {compose} from "redux";
 import {WithAuthRedirect} from "../../hoc/WithAuthRedirect";
 import {AppStateType} from "../../redux/redux-store";
 import {ProfileType} from "../../Types/CommonTypes";
+import {getAuthUserID, getIsAuth, getProfile, getStatusProfile} from '../../redux/profile-selectors';
 
 type MapPropsType = ReturnType<typeof mapStateToProps>
 type DispatchPropsType = {
@@ -67,10 +68,10 @@ class ProfileContainer extends React.Component<PropsType> {
 }
 
 let mapStateToProps = (state: AppStateType) => ({
-    profile: state.profilePage.profile,
-    status: state.profilePage.status,
-    authorizedUserId: state.auth.userId,
-    isAuth: state.auth.isAuth,
+    profile: getProfile(state),
+    status: getStatusProfile(state),
+    authorizedUserId: getAuthUserID(state),
+    isAuth: getIsAuth(state),
 })
 
 export default compose<ComponentType>(connect(mapStateToProps, {getUserProfile, getStatus, updateStatus, savePhoto, saveProfile}), withRouter, WithAuthRedirect)(ProfileContainer)

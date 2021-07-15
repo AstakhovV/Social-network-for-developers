@@ -28,6 +28,7 @@ const Users: React.FC<PropsType> = ({user, followingInProgress, unfollow, follow
         <List
             itemLayout="horizontal"
             dataSource={data}
+            bordered
             renderItem={item => (
                 <List.Item>
                     <List.Item.Meta
@@ -35,6 +36,7 @@ const Users: React.FC<PropsType> = ({user, followingInProgress, unfollow, follow
                         title={<a href={'/profile/' + user.id}>{user.name}</a>}
                         description={user.status}
                     />
+
                     <div>{user.followed
                         ? <Button disabled={followingInProgress.some(id => id === user.id)} onClick={() => {
                             unfollow(user.id)

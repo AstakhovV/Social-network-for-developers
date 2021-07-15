@@ -1,10 +1,12 @@
 .photo {
-    width: 100px;
-    height: 100px
+    width: 200px;
+    height: 200px;
+    padding: 20px;
+    margin-left: 100px;
+    border-radius: 50px !important;;
 }
 .item {
     color: black;
-    padding-left: 10px;
 }
 .contact{
     padding-left: 20px;
@@ -17,6 +19,13 @@
 
 .button{
     cursor: pointer;
+    margin-left: 140px;
+}
+.buttonSaveProfile{
+    cursor: pointer;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 .profileData{
     padding-left: 10px;
