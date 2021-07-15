@@ -6,8 +6,11 @@ import {ResultCodesEnum} from "../api/api";
 
 
 let initialState = {
-    posts: [{id: 1, message: 'Hi, how are you?', likesCount: 23},
-        {id: 2, message: 'It is my first project', likesCount: 122}
+    posts: [{id: 1, message: 'Hi there! It is my first project with TypeScript!', likesCount: 23},
+        {id: 2, message: 'In this application used Redux, Selectors, Formik and Redux-Form, AntDesign and a lot of Hooks!', likesCount: 122},
+        {id: 3, message: 'We work with API \"Social-network\", where all interested developers can register and develop their own social network. ', likesCount: 322},
+        {id: 3, message: 'I try to increase my technical level every day, and I do it!', likesCount: 77}
+
     ] as Array<PostType>,
     profile: null as ProfileType | null,
     status: '' as string,

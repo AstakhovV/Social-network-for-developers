@@ -2,6 +2,7 @@ import React from 'react';
 import s from './Posts.module.css'
 import myPostIcon from '../../../assets/image/myPostIcon.png'
 import {ProfileType} from "../../../Types/CommonTypes";
+import {LikeOutlined} from '@ant-design/icons';
 
 
 type PropsType = {
@@ -16,7 +17,8 @@ const Posts: React.FC<PropsType> = (props) => {
                 <img src={props.profile.photos.large || myPostIcon}/>
                 {props.message}
                 <div>
-                    <span>Like</span> {props.likesCount}
+                    <LikeOutlined />
+                     Like {props.likesCount}
                 </div>
             </div>
         </div>

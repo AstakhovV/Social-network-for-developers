@@ -32,7 +32,7 @@ const Profile: React.FC<PropsType> = (props) => {
                                  saveProfile={props.saveProfile}
                     />
                 </Col>
-                <Col flex={3}>
+                <Col flex={7}>
                     <MyPosts
                         profile={props.profile}
                         isOwner={props.isOwner}

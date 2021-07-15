@@ -1,10 +1,12 @@
 import axios from "axios";
 import {UsersType} from "../Types/CommonTypes";
 
+const API_KEY = process.env.REACT_APP_API_KEY
+
 export const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/', // базовый уровень автоматически приклеивается к запросу
-    headers: {'API-KEY': '57712655-0808-4238-96f5-835cf3209f20'}
+    headers: {'API-KEY': API_KEY}
 });
 
 export enum ResultCodesEnum {

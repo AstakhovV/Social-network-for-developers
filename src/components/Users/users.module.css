@@ -5,3 +5,9 @@
 .button{
     cursor: pointer;
 }
+.userSearchForm{
+width: 300px;
+}
+.userSearchFormSelect{
+    width: 100px;
+}
