@@ -7,7 +7,7 @@ type PropsType = {
 }
 
 let Preloader: React.FC<PropsType> = () => {
-    return <div>
+    return <div style={{textAlign: 'center', marginTop: '20px' }}>
         <Spin size="large" />
     </div>
 

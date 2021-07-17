@@ -8,7 +8,7 @@ import {initializeApp} from "./redux/app-reducer";
 import Preloader from "./components/Common/Preloader/Preloader";
 import {WithSuspenseHock} from "./hoc/WithSuspenseHock";
 import {UsersContainer} from './components/Users/UsersContainer';
-import {Breadcrumb, Layout, Menu} from 'antd';
+import {Breadcrumb, Layout, Menu, Modal} from 'antd';
 import {TeamOutlined, SettingOutlined, UserOutlined} from '@ant-design/icons';
 import {HeaderApp} from './components/Header/Header';
 import {selectorInitialized} from "./redux/app-selectors";
@@ -42,7 +42,11 @@ const App: React.FC<AppPropsType> = () => {
 
 
     const catchAllUnhandledErrors = (e: PromiseRejectionEvent) => {
-        alert('Some error occurred')
+        return  Modal.error({
+            title: 'This is an error message',
+            content: 'Some error occurred',
+        });
+
     }
     useEffect(() => {
         dispatch(initializeApp())
