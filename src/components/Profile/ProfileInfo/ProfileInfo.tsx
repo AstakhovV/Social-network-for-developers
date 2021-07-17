@@ -78,6 +78,7 @@ const ProfileInfo: React.FC<PropsType> = ({saveProfile, ...props}) => {
                     title={
                         <div>
                             <ProfileStatusWithHooks status={props.status}
+                                                    isOwner ={props.isOwner}
                                                     updateStatus={props.updateStatus}/>
                         </div>
                     }

@@ -5,6 +5,8 @@ import {Input} from "antd";
 type PropsType = {
     status: string
     updateStatus: (status: string)=> void
+    isOwner: boolean
+
 }
 const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
     let [editMode, setEditMode] = useState(false);
@@ -15,9 +17,11 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
     }, [props.status])
 
     const activateEditMode = () => {
+        props.isOwner &&
         setEditMode(true)
     }
     const deactivateEditMode = () => {
+        props.isOwner &&
         setEditMode(false)
         props.updateStatus(status)
     }
@@ -32,7 +36,7 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
                     <b>Status</b>: <span >{props.status || "No status"} </span>
                 </div>
                 }
-                {editMode &&
+                {editMode && props.isOwner &&
                 <div>
                     <Input onChange={onStatusChange}
                            autoFocus={true}
