@@ -8,7 +8,7 @@ import store from "./redux/redux-store";
 import {BrowserRouter} from "react-router-dom";
 
 ReactDOM.render(
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter basename='/Social-network-for-developers'>
         <Provider store={store}>
             <AppContainer/>
         </Provider>

@@ -26,15 +26,19 @@ const ProfileStatusWithHooks: React.FC<PropsType> = (props) => {
         props.updateStatus(status)
     }
     const onStatusChange = (e: ChangeEvent<HTMLInputElement> )=> {
-        if (e.currentTarget.value.length <= 200) { //ограничитель ввода
+        if (e.currentTarget.value.length <= 200) {
             setStatus(e.currentTarget.value)}}
 
         return (
             <div className={s.profileData}>
-                {!editMode &&
-                <div className={s.userStatus} onClick={activateEditMode}>
-                    <b>Status</b>: <span >{props.status || "No status"} </span>
-                </div>
+                {(!editMode && props.isOwner )?
+                    <div className={s.userStatus} onClick={activateEditMode}>
+                        <b>Status</b>: <span>{props.status || "No status"} </span>
+                    </div>
+                    :
+                    <div>
+                        <b>Status</b>: <span>{props.status || "No status"} </span>
+                    </div>
                 }
                 {editMode && props.isOwner &&
                 <div>
