@@ -33,7 +33,7 @@ const Users: React.FC<PropsType> = ({user, followingInProgress, unfollow, follow
                 <List.Item>
                     <List.Item.Meta
                         avatar={<Avatar src={user.photos.small != null ? user.photos.small : userPhoto}/>}
-                        title={<a href={'/Social-network-for-developers/profile/' + user.id}>{user.name}</a>}
+                        title={<a href={'#/profile/' + user.id}>{user.name}</a>}
                         description={user.status}
                     />
 
