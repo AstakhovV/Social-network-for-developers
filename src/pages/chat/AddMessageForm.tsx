@@ -1,22 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
+import {useDispatch} from "react-redux";
+import {sendMessages} from "../../redux/chat-reducer";
 
-const AddMessageForm: React.FC<{ wsChannel: WebSocket | null }> = ({wsChannel}) => {
+const AddMessageForm: React.FC = () => {
     const [message, setMessage] = useState('')
     const [isClosed, setIsClosed] = useState(true)
-    useEffect(() => {
-        const openWebSocket = () => {
-            setIsClosed(false)
-        }
-        wsChannel?.addEventListener('open', openWebSocket)
-        return () => {
-            wsChannel?.removeEventListener('open', openWebSocket)
-        }
-    }, [wsChannel])
-    const sendMessage = () => {
+    const dispatch = useDispatch()
+    const sendMessageHandler = () => {
         if (!message) {
             return
         }
-        wsChannel?.send(message)
+        dispatch(sendMessages(message))
         setMessage('')
     }
     return (
@@ -25,7 +19,7 @@ const AddMessageForm: React.FC<{ wsChannel: WebSocket | null }> = ({wsChannel}) 
                 <textarea value={message} onChange={(e) => setMessage(e.target.value)}/>
             </div>
             <div>
-                <button disabled={isClosed || wsChannel === null} onClick={sendMessage}>Send</button>
+                <button disabled={false} onClick={sendMessageHandler}>Send</button>
             </div>
         </div>
     );
