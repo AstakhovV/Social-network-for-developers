@@ -6,7 +6,7 @@ const API_KEY = process.env.REACT_APP_API_KEY
 export const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/', // базовый уровень автоматически приклеивается к запросу
-    headers: {'API-KEY': API_KEY}
+    headers: {'API-KEY': API_KEY!}
 });
 
 export enum ResultCodesEnum {

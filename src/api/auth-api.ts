@@ -12,13 +12,12 @@ export const authAPI = {
     },
     login(email: string, password: string, rememberMe: boolean = false, captcha: string | null = null) {
         return instance.post<APIResponseType<LoginResponseDataType, ResultCodesEnum | ResultCodeCaptchaEnum>>(`auth/login`, {
-            email,
-            password,
-            rememberMe,
-            captcha
+            // @ts-ignore
+            email, password, rememberMe, captcha
+            // @ts-ignore
         }).then(res => res.data)
     },
     logout() {
-        return instance.delete(`auth/login`)
+        return instance.delete<APIResponseType>(`auth/login`).then(res => res)
     }
 }

@@ -15,12 +15,14 @@ import {selectorInitialized} from "./redux/app-selectors";
 
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
+const ChatPageContainer = React.lazy(() => import('./pages/chat/ChatPage'));
 
 const { SubMenu } = Menu;
 const { Content, Sider } = Layout;
 
 const SuspendedDialogs = WithSuspenseHock(DialogsContainer)
 const SuspendedProfile = WithSuspenseHock(ProfileContainer)
+const SuspendedChatPage = WithSuspenseHock(ChatPageContainer)
 
 type AppPropsType = {
 }
@@ -74,13 +76,15 @@ const App: React.FC<AppPropsType> = () => {
                                 </Menu.Item>
                                 <Menu.Item key="2"><Link to="/dialogs">Dialogs</Link>
                                 </Menu.Item>
+                                <Menu.Item key="3"><Link to="/chat">Chat</Link>
+                                </Menu.Item>
                             </SubMenu>
                             <SubMenu key="sub2" icon={<TeamOutlined />} title="Users">
-                                <Menu.Item key="3"><Link to="/developers">Developers</Link>
+                                <Menu.Item key="4"><Link to="/developers">Developers</Link>
                                 </Menu.Item>
                             </SubMenu>
                             <SubMenu key="sub3" icon={<SettingOutlined />} title="Settings">
-                                <Menu.Item key="4"><Link to="/settings">Main settings</Link></Menu.Item>
+                                <Menu.Item key="5"><Link to="/settings">Main settings</Link></Menu.Item>
                             </SubMenu>
                         </Menu>
                     </Sider>
@@ -108,6 +112,8 @@ const App: React.FC<AppPropsType> = () => {
                                        render={() => <UsersContainer/>}/>
                                 <Route path='/login'
                                        render={() => <LoginPage/>}/>
+                                <Route path='/chat'
+                                       render={() => <SuspendedChatPage/>}/>
                                 <Route path='*'
                                        render={() => <div>404 NOT FOUND</div>}/>
                             </Switch>
