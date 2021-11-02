@@ -12,7 +12,6 @@ type PropsType = {
 }
 const Posts: React.FC<PropsType> = (props) => {
     return (
-        <div>
             <div className={s.post}>
                 <img src={props.profile.photos.large || myPostIcon}/>
                 {props.message}
@@ -21,7 +20,6 @@ const Posts: React.FC<PropsType> = (props) => {
                      Like {props.likesCount}
                 </div>
             </div>
-        </div>
     )
 }
 

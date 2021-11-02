@@ -2,11 +2,10 @@ import React from 'react';
 import s from './MyPosts.module.css'
 import Posts from "./Posts";
 import {AddNewPostFormRedux, AddPostValuesType} from "./AddNewPostForm";
-import { ProfileType} from "../../../Types/CommonTypes";
+import {ProfileType} from "../../../Types/CommonTypes";
 import {useDispatch, useSelector} from "react-redux";
 import {getPosts} from "../../../redux/profile-selectors";
 import {actions} from "../../../redux/profile-reducer";
-
 
 export type OwnPropsType = {
     isOwner: boolean
@@ -17,14 +16,12 @@ const MyPosts: React.FC<OwnPropsType> = (props) => {
     const posts = useSelector(getPosts)
     const dispatch = useDispatch()
 
-    let postsElements =
-        posts.map(p => <Posts key={p.id}
-                                    message={p.message}
-                                    likesCount={p.likesCount}
-                                    profile={props.profile}
-
-        />)
-
+    let postsElements = posts.map((p, i) => (
+        <Posts key={`post-${p.id}-${i}`}
+               message={p.message}
+               likesCount={p.likesCount}
+               profile={props.profile}/>
+    ))
 
     let onAddPost = (values: AddPostValuesType) => {
         dispatch(actions.addPostActionCreator(values.newPostText));

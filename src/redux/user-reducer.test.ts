@@ -5,6 +5,7 @@ import {UsersType} from "../Types/CommonTypes";
 let state: InitialStateType
 
 beforeEach(() => {
+    // @ts-ignore
     state= {
         users: [
             {
