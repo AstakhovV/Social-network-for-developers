@@ -1,36 +1,38 @@
-.buttonLogin{
-    margin-left: 140px;
-    padding-top: 10px;
-    cursor: pointer;
-    margin-right: 100px;
+.buttonLogin {
+  margin-left: 140px;
+  padding-top: 10px;
+  cursor: pointer;
+  margin-right: 100px;
 }
 
 .loginForm {
-    width: 300px;
-    padding: 2px;
+  width: 300px;
+  padding: 2px;
 }
 
 .loginFormCaptcha {
-    width: 300px;
-    padding: 2px;
-    align-items: center;
+  width: 300px;
+  padding: 2px;
+  align-items: center;
 }
+
 .checkbox {
-    margin-left: 5px;
-    padding-top: 10px;
-    float: left;
+  margin-left: 5px;
+  padding-top: 10px;
+  float: left;
 }
 
 .formControl.error input,
 .formControl.error textarea {
-    border: solid red 1px;
+  border: solid red 1px;
 }
 
 .formControl.error span {
-    color: red;
+  color: red;
 }
+
 .formSummary {
-    border: solid red 1px;
-    padding: 5px;
-    color: rosybrown;
+  border: solid red 1px;
+  padding: 5px;
+  color: rosybrown;
 }

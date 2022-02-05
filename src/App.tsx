@@ -17,15 +17,14 @@ const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileCo
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
 const ChatPageContainer = React.lazy(() => import('./pages/chat/ChatPage'));
 
-const { SubMenu } = Menu;
-const { Content, Sider } = Layout;
+const {SubMenu} = Menu;
+const {Content, Sider} = Layout;
 
 const SuspendedDialogs = WithSuspenseHock(DialogsContainer)
 const SuspendedProfile = WithSuspenseHock(ProfileContainer)
 const SuspendedChatPage = WithSuspenseHock(ChatPageContainer)
 
-type AppPropsType = {
-}
+type AppPropsType = {}
 
 const App: React.FC<AppPropsType> = () => {
 
@@ -33,18 +32,18 @@ const App: React.FC<AppPropsType> = () => {
     const dispatch = useDispatch()
     const location = useLocation()
     const breadCrumbView = () => {
-        const { pathname } = location
+        const {pathname} = location
         return pathname.split('/').filter(item => item)[0]
     }
-    let pathnameURL = breadCrumbView ()
+    let pathnameURL = breadCrumbView()
     let pathnameCrumb = ''
-    if (pathnameURL){
+    if (pathnameURL) {
         pathnameCrumb = pathnameURL[0].toUpperCase() + pathnameURL.slice(1)
     }
 
 
     const catchAllUnhandledErrors = (e: PromiseRejectionEvent) => {
-        return  Modal.error({
+        return Modal.error({
             title: 'This is an error message',
             content: 'Some error occurred',
         });
@@ -79,11 +78,11 @@ const App: React.FC<AppPropsType> = () => {
                                 <Menu.Item key="3"><Link to="/chat">Chat</Link>
                                 </Menu.Item>
                             </SubMenu>
-                            <SubMenu key="sub2" icon={<TeamOutlined />} title="Users">
+                            <SubMenu key="sub2" icon={<TeamOutlined/>} title="Users">
                                 <Menu.Item key="4"><Link to="/developers">Developers</Link>
                                 </Menu.Item>
                             </SubMenu>
-                            <SubMenu key="sub3" icon={<SettingOutlined />} title="Settings">
+                            <SubMenu key="sub3" icon={<SettingOutlined/>} title="Settings">
                                 <Menu.Item key="5"><Link to="/settings">Main settings</Link></Menu.Item>
                             </SubMenu>
                         </Menu>
@@ -91,7 +90,7 @@ const App: React.FC<AppPropsType> = () => {
                     <Layout style={{padding: '0 24px 24px'}}>
                         <Breadcrumb style={{margin: '16px 0'}}>
                             <Breadcrumb.Item><Link to="/profile">Home</Link></Breadcrumb.Item>
-                            <Breadcrumb.Item><Link to={`/${pathnameURL}`} >{pathnameCrumb}</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item><Link to={`/${pathnameURL}`}>{pathnameCrumb}</Link></Breadcrumb.Item>
                         </Breadcrumb>
                         <Content
                             className="site-layout-background"
